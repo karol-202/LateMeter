@@ -1,0 +1,9 @@
+<resources>
+	<string name="app_name">LateMeter</string>
+
+	<string name="screen_lateness">Spóźnienie</string>
+	<string name="screen_teachers">Nauczyciele</string>
+	<string name="screen_schedule">Godziny lekcyjne</string>
+
+	<string name="unknown">Nieznany</string>
+</resources>
