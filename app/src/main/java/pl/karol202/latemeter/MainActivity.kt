@@ -7,8 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.navigation.NavigationView
 
 class MainActivity : AppCompatActivity()
 {
@@ -16,7 +15,7 @@ class MainActivity : AppCompatActivity()
 
 	private val toolbar by lazy { findViewById<Toolbar>(R.id.toolbar) }
 	private val drawerLayout by lazy { findViewById<DrawerLayout>(R.id.drawer_layout_main) }
-	private val recyclerDrawer by lazy { findViewById<RecyclerView>(R.id.recycler_drawer) }
+	private val navigationViewScreens by lazy { findViewById<NavigationView>(R.id.navigation_view_screens) }
 
 	private var screen: Screen = Screen.LATENESS
 		set(value)
@@ -36,8 +35,8 @@ class MainActivity : AppCompatActivity()
 	    actionBar.setDisplayHomeAsUpEnabled(true)
 	    actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp)
 
-	    recyclerDrawer.layoutManager = LinearLayoutManager(this)
-	    recyclerDrawer.adapter = ScreenAdapter(this) { onScreenSelected(it) }
+	    navigationViewScreens.setCheckedItem(screen.id)
+	    navigationViewScreens.setNavigationItemSelectedListener { onScreenItemSelected(it) }
 
 	    updateScreen()
     }
@@ -45,7 +44,7 @@ class MainActivity : AppCompatActivity()
 	private fun restoreState(state: Bundle?)
 	{
 		if(state == null) return
-		screen = state[KEY_SCREEN] as Screen
+		screen = (state[KEY_SCREEN] as? Screen) ?: return
 	}
 
 	override fun onSaveInstanceState(outState: Bundle?, outPersistentState: PersistableBundle?)
@@ -64,10 +63,12 @@ class MainActivity : AppCompatActivity()
 		else -> super.onOptionsItemSelected(item)
 	}
 
-	private fun onScreenSelected(screen: Screen)
+	private fun onScreenItemSelected(item: MenuItem): Boolean
 	{
-		this.screen = screen
+		this.screen = Screen.findScreenById(item.itemId) ?: return false
+		item.isChecked = true
 		drawerLayout.closeDrawers()
+		return true
 	}
 
 	private fun updateScreen()
