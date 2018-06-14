@@ -11,10 +11,10 @@
 		android:id="@+id/recycler_teachers"
 		app:layout_behavior="@string/appbar_scrolling_view_behavior">
 	</androidx.recyclerview.widget.RecyclerView>
+
 	<com.google.android.material.floatingactionbutton.FloatingActionButton
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:clickable="true"
 		app:srcCompat="@drawable/ic_add_white_24dp"
 		android:id="@+id/button_add_teacher"
 		app:fabSize="normal"

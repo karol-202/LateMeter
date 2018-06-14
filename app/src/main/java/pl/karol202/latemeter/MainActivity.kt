@@ -37,14 +37,18 @@ class MainActivity : AppCompatActivity()
 
 	    navigationViewScreens.setCheckedItem(screen.id)
 	    navigationViewScreens.setNavigationItemSelectedListener { onScreenItemSelected(it) }
-
-	    updateScreen()
     }
 
 	private fun restoreState(state: Bundle?)
 	{
 		if(state == null) return
 		screen = (state[KEY_SCREEN] as? Screen) ?: return
+	}
+
+	override fun onPostCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?)
+	{
+		super.onPostCreate(savedInstanceState, persistentState)
+		updateScreen()
 	}
 
 	override fun onSaveInstanceState(outState: Bundle?, outPersistentState: PersistableBundle?)

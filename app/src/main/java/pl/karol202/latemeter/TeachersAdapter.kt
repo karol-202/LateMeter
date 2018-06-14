@@ -1,22 +1,21 @@
 package pl.karol202.latemeter
 
 import android.content.Context
-import android.content.res.ColorStateList
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.RecyclerView
 
-class TeachersAdapter(private val context: Context, private val teachers: Teachers, private val listener: (Teacher) -> Unit) : RecyclerView.Adapter<TeachersAdapter.ViewHolder>()
+class TeachersAdapter(private val context: Context, private val teachers: Teachers, private val listener: (Int, Teacher) -> Unit) : RecyclerView.Adapter<TeachersAdapter.ViewHolder>()
 {
 	inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
 	{
-		private val imageAvatar = view.findViewById<ImageView>(R.id.image_teacher_avatar)
+		private val imageAvatar = view.findViewById<AppCompatImageView>(R.id.image_teacher_color)
 		private val textName = view.findViewById<TextView>(R.id.text_teacher_name)
 
+		private var index: Int? = null
 		private var teacher: Teacher? = null
 
 		init
@@ -26,14 +25,15 @@ class TeachersAdapter(private val context: Context, private val teachers: Teache
 
 		private fun onClick()
 		{
-			listener(teacher ?: return)
+			listener(index ?: return, teacher ?: return)
 		}
 
-		fun bind(teacher: Teacher)
+		fun bind(index: Int, teacher: Teacher)
 		{
+			this.index = index
 			this.teacher = teacher
 
-			imageAvatar.imageTintList = ColorStateList(arrayOf(intArrayOf()), intArrayOf(Color.RED))
+			imageAvatar.setColorFilter(teacher.color)
 			textName.text = teacher.name
 		}
 	}
@@ -48,7 +48,6 @@ class TeachersAdapter(private val context: Context, private val teachers: Teache
 
 	override fun onBindViewHolder(holder: ViewHolder, position: Int)
 	{
-		val teacher = teachers[position]
-		holder.bind(teacher)
+		holder.bind(position, teachers[position])
 	}
 }

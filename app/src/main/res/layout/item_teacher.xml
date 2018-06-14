@@ -3,12 +3,15 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
-	android:layout_height="56dp">
+	android:layout_height="56dp"
+	android:clickable="true"
+	android:focusable="true"
+	android:background="?android:attr/selectableItemBackground">
 
 	<ImageView
-		android:layout_width="48dp"
-		android:layout_height="48dp"
-		android:id="@+id/image_teacher_avatar"
+		android:layout_width="36dp"
+		android:layout_height="36dp"
+		android:id="@+id/image_teacher_color"
 		android:layout_marginStart="16dp"
 		app:layout_constraintTop_toTopOf="parent"
 		app:layout_constraintBottom_toBottomOf="parent"
@@ -23,6 +26,6 @@
 		android:layout_marginStart="16dp"
 		app:layout_constraintTop_toTopOf="parent"
 		app:layout_constraintBottom_toBottomOf="parent"
-		app:layout_constraintStart_toEndOf="@id/image_teacher_avatar"
+		app:layout_constraintStart_toEndOf="@id/image_teacher_color"
 		android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"/>
 </androidx.constraintlayout.ConstraintLayout>

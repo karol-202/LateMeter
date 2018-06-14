@@ -1,9 +1,27 @@
 <resources>
 	<string name="app_name">LateMeter</string>
+	<string name="activity_teacher">Edytuj nauczyciela</string>
 
 	<string name="screen_lateness">Spóźnienie</string>
 	<string name="screen_teachers">Nauczyciele</string>
 	<string name="screen_schedule">Godziny lekcyjne</string>
+
+	<string name="dialog_teacher_remove">Czy na pewno chcesz usunąć?</string>
+	<string name="dialog_teacher_remove_message">Wszystkie dane zostaną usunięte</string>
+	<string name="dialog_teacher_color">Wybierz kolor</string>
+
+	<string name="item_teacher_remove">Usuń nauczyciela</string>
+
+	<string name="hint_teacher_name">Imię i nazwisko</string>
+
+	<string name="button_delete">Usuń</string>
+	<string name="button_cancel">Anuluj</string>
+
+	<string name="text_teacher_color">Wybierz kolor</string>
+
+	<string name="error_teacher_name_blank">Nazwa nie może być pusta</string>
+
+	<string name="teacher_default_name">Nowy nauczyciel</string>
 
 	<string name="unknown">Nieznany</string>
 </resources>

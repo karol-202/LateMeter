@@ -7,4 +7,52 @@
 	<color name="text_primary">#de000000</color>
 
 	<color name="toolbar_shadow">#33000000</color>
+
+	<color name="teacher_default_color">#FF0000</color>
+
+	<array name="teacher_colors">
+		<item>#FFCDD2</item>
+		<item>#EF9A9A</item>
+		<item>#EF5350</item>
+		<item>#F44336</item>
+		<item>#B71C1C</item>
+		<item>#FF1744</item>
+		<item>#F48FB1</item>
+		<item>#EC407A</item>
+		<item>#E91E63</item>
+		<item>#C2185B</item>
+		<item>#880E4F</item>
+		<item>#C51162</item>
+		<item>#CE93D8</item>
+		<item>#AB47BC</item>
+		<item>#9C27B0</item>
+		<item>#7B1FA2</item>
+		<item>#4A148C</item>
+		<item>#D500F9</item>
+		<item>#B39DDB</item>
+		<item>#673AB7</item>
+		<item>#512DA8</item>
+		<item>#311B92</item>
+		<item>#651FFF</item>
+		<item>#9FA8DA</item>
+		<item>#5C6BC0</item>
+		<item>#3F51B5</item>
+		<item>#1A237E</item>
+		<item>#90CAF9</item>
+		<item>#2196F3</item>
+		<item>#0D47A1</item>
+		<item>#2979FF</item>
+		<item>#81D4FA</item>
+		<item>#03A9F4</item>
+		<item>#80DEEA</item>
+		<item>#26C6DA</item>
+		<item>#00BCD4</item>
+		<item>#00838F</item>
+		<item>#006064</item>
+		<item>#00E5FF</item>
+		<item>#80CBC4</item>
+		<item>#26A69A</item>
+		<item>#00897B</item>
+		<item>#004D40</item>
+	</array>
 </resources>

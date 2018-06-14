@@ -1,3 +1,5 @@
 package pl.karol202.latemeter
 
-class Teacher(var name: String)
+import java.io.Serializable
+
+data class Teacher(var name: String, var color: Int) : Serializable
