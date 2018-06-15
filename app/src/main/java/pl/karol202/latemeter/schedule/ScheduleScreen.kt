@@ -1,4 +1,4 @@
-package pl.karol202.latemeter
+package pl.karol202.latemeter.schedule
 
 import android.app.AlertDialog
 import android.app.TimePickerDialog
@@ -13,19 +13,24 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
+import pl.karol202.latemeter.utils.ItemDivider
+import pl.karol202.latemeter.R
 
 class ScheduleScreen : Fragment()
 {
 	private val is24h by lazy { DateFormat.is24HourFormat(requireContext()) }
 	private val schedule by lazy { Schedule.loadSchedule(requireContext()) }
 
-	private val adapter by lazy { ScheduleAdapter(requireContext(), schedule, object : ScheduleAdapter.OnScheduleHourListener {
-		override fun onStartHourChange(scheduleHour: Schedule.ScheduleHour) = showStartHourPicker(scheduleHour)
+	private val adapter by lazy {
+		ScheduleAdapter(requireContext(), schedule, object : ScheduleAdapter.OnScheduleHourListener
+		{
+			override fun onStartHourChange(scheduleHour: Schedule.ScheduleHour) = showStartHourPicker(scheduleHour)
 
-		override fun onEndHourChange(scheduleHour: Schedule.ScheduleHour) = showEndHourPicker(scheduleHour)
+			override fun onEndHourChange(scheduleHour: Schedule.ScheduleHour) = showEndHourPicker(scheduleHour)
 
-		override fun onRemove(scheduleHour: Schedule.ScheduleHour) = showRemovalDialog(scheduleHour)
-	}) }
+			override fun onRemove(scheduleHour: Schedule.ScheduleHour) = showRemovalDialog(scheduleHour)
+		})
+	}
 
 	var coordinator: CoordinatorLayout? = null
 

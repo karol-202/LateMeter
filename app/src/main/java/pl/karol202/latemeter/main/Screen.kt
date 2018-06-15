@@ -1,6 +1,10 @@
-package pl.karol202.latemeter
+package pl.karol202.latemeter.main
 
 import androidx.fragment.app.Fragment
+import pl.karol202.latemeter.R
+import pl.karol202.latemeter.lateness.LatenessScreen
+import pl.karol202.latemeter.schedule.ScheduleScreen
+import pl.karol202.latemeter.teachers.TeachersScreen
 
 enum class Screen(val id: Int, val fragmentSupplier: () -> Fragment)
 {

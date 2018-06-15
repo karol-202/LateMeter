@@ -1,4 +1,4 @@
-package pl.karol202.latemeter
+package pl.karol202.latemeter.teachers
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.RecyclerView
+import pl.karol202.latemeter.R
 
 class TeachersAdapter(private val context: Context, private val teachers: Teachers, private val listener: (Int, Teacher) -> Unit) : RecyclerView.Adapter<TeachersAdapter.ViewHolder>()
 {

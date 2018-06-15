@@ -1,4 +1,4 @@
-package pl.karol202.latemeter
+package pl.karol202.latemeter.main
 
 import android.os.Bundle
 import android.os.PersistableBundle
@@ -8,6 +8,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
+import pl.karol202.latemeter.R
 
 class MainActivity : AppCompatActivity()
 {

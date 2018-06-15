@@ -1,4 +1,4 @@
-package pl.karol202.latemeter
+package pl.karol202.latemeter.teachers
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import pl.karol202.latemeter.R
 
 class TeachersScreen : Fragment()
 {
@@ -50,7 +51,8 @@ class TeachersScreen : Fragment()
 	override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
 	{
 		val index = data?.getIntExtra(TeacherActivity.KEY_INDEX, -1) ?: return
-		val teacher = data.getSerializableExtra(TeacherActivity.KEY_TEACHER) as? Teacher ?: return
+		val teacher = data.getSerializableExtra(TeacherActivity.KEY_TEACHER) as? Teacher
+				?: return
 		when
 		{
 			requestCode == REQUEST_ADD_TEACHER && resultCode == TeacherActivity.RESULT_OK -> teachers.addTeacher(teacher)

@@ -1,4 +1,4 @@
-package pl.karol202.latemeter
+package pl.karol202.latemeter.teachers
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import pl.karol202.latemeter.R
 
 class TeacherActivity : AppCompatActivity()
 {
@@ -41,8 +42,7 @@ class TeacherActivity : AppCompatActivity()
 
 	private val index: Int by lazy { intent.getIntExtra(KEY_INDEX, -1) }
 	private val teacher: Teacher by lazy {
-		(intent.getSerializableExtra(KEY_TEACHER) as? Teacher) ?:
-		Teacher(getString(R.string.teacher_default_name), ResourcesCompat.getColor(resources, R.color.teacher_default_color, null))
+		(intent.getSerializableExtra(KEY_TEACHER) as? Teacher) ?: Teacher(getString(R.string.teacher_default_name), ResourcesCompat.getColor(resources, R.color.teacher_default_color, null))
 	}
 
 	private var newColor: Int? = null

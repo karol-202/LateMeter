@@ -1,8 +1,9 @@
-package pl.karol202.latemeter
+package pl.karol202.latemeter.schedule
 
 import android.content.Context
 import android.preference.PreferenceManager
 import com.google.gson.Gson
+import pl.karol202.latemeter.R
 
 class Schedule private constructor(context: Context)
 {
@@ -59,7 +60,7 @@ class Schedule private constructor(context: Context)
 
 	private val MAX_LENGTH = 20
 
-	private val scheduleHours = mutableListOf<Schedule.ScheduleHour>()
+	private val scheduleHours = mutableListOf<ScheduleHour>()
 
 	val size: Int
 		get() = scheduleHours.size
@@ -119,7 +120,7 @@ class Schedule private constructor(context: Context)
 		val length = prefs.getInt(KEY_LENGTH, 0)
 		for(i in 0 until length)
 		{
-			val scheduleHour = gson.fromJson(prefs.getString(KEY_SCHEDULE_HOUR_N + i, ""), Schedule.ScheduleHour::class.java)
+			val scheduleHour = gson.fromJson(prefs.getString(KEY_SCHEDULE_HOUR_N + i, ""), ScheduleHour::class.java)
 			scheduleHour.schedule = this
 			scheduleHours.add(scheduleHour)
 		}

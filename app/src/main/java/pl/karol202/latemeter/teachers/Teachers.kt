@@ -1,4 +1,4 @@
-package pl.karol202.latemeter
+package pl.karol202.latemeter.teachers
 
 import android.content.Context
 import android.preference.PreferenceManager

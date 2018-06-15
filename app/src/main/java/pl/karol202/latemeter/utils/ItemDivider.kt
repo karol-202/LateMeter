@@ -1,9 +1,10 @@
-package pl.karol202.latemeter
+package pl.karol202.latemeter.utils
 
 import android.content.Context
 import android.graphics.Canvas
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import pl.karol202.latemeter.R
 
 class ItemDivider(context: Context) : RecyclerView.ItemDecoration()
 {

@@ -1,4 +1,4 @@
-package pl.karol202.latemeter
+package pl.karol202.latemeter.teachers
 
 import android.content.Context
 import android.graphics.Color
@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import pl.karol202.latemeter.R
 
 class TeacherColorsAdapter(private val context: Context, private val listener: (Int) -> Unit) : RecyclerView.Adapter<TeacherColorsAdapter.ViewHolder>()
 {
