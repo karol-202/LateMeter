@@ -3,6 +3,9 @@ package pl.karol202.latemeter
 import android.content.Context
 import android.preference.PreferenceManager
 import com.google.gson.Gson
+import java.io.Serializable
+
+data class Teacher(var name: String, var color: Int) : Serializable
 
 class Teachers private constructor(context: Context)
 {

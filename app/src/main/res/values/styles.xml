@@ -3,5 +3,10 @@
 		<item name="colorPrimary">@color/colorPrimary</item>
 		<item name="colorPrimaryDark">@color/colorPrimaryDark</item>
 		<item name="colorSecondary">@color/colorSecondary</item>
+		<item name="colorError">@color/colorError</item>
+	</style>
+
+	<style name="ImageButton.Borderless" parent="Widget.AppCompat.ImageButton">
+		<item name="android:background">?android:attr/selectableItemBackgroundBorderless</item>
 	</style>
 </resources>

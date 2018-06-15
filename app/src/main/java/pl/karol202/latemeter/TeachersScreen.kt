@@ -24,7 +24,7 @@ class TeachersScreen : Fragment()
 		val view = inflater.inflate(R.layout.screen_teachers, container, false)
 
 		val recyclerTeachers = view.findViewById<RecyclerView>(R.id.recycler_teachers)
-		recyclerTeachers.layoutManager = LinearLayoutManager(context)
+		recyclerTeachers.layoutManager = LinearLayoutManager(requireContext())
 		recyclerTeachers.adapter = adapter
 
 		val buttonAddTeacher = view.findViewById<FloatingActionButton>(R.id.button_add_teacher)

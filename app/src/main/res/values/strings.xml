@@ -7,8 +7,11 @@
 	<string name="screen_schedule">Godziny lekcyjne</string>
 
 	<string name="dialog_teacher_remove">Czy na pewno chcesz usunąć?</string>
-	<string name="dialog_teacher_remove_message">Wszystkie dane zostaną usunięte</string>
+	<string name="dialog_teacher_remove_message">Wszystkie dane nauczyciela zostaną usunięte</string>
 	<string name="dialog_teacher_color">Wybierz kolor</string>
+	<string name="dialog_schedule_hour_remove">Czy na pewno chcesz usunąć?</string>
+	<string name="dialog_schedule_hour_remove_message">Wszystkie powiązania nauczycieli z tą godziną lekcyjną
+		zostaną usunięte</string>
 
 	<string name="item_teacher_remove">Usuń nauczyciela</string>
 
@@ -19,9 +22,17 @@
 
 	<string name="text_teacher_color">Wybierz kolor</string>
 
+	<string name="message_schedule_full">Nie można dodać nowego elementu</string>
+
 	<string name="error_teacher_name_blank">Nazwa nie może być pusta</string>
+	<string name="error_schedule_hour_invalid">Niewłaściwa godzina</string>
+	<string name="error_schedule_hour_negative_timespan">Godzina zakończenia musi być późniejsza niż godzina
+		rozpoczęcia</string>
+	<string name="error_schedule_hour_overlap">Godziny lekcyjne nie mogą się pokrywać</string>
 
 	<string name="teacher_default_name">Nowy nauczyciel</string>
 
+	<string name="hour_separator">-</string>
 	<string name="unknown">Nieznany</string>
+	<string name="hour_unknown">00:00</string>
 </resources>

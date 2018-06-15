@@ -3,9 +3,10 @@
 	<color name="colorPrimary">#85c925</color>
 	<color name="colorPrimaryDark">#519800</color>
 	<color name="colorSecondary">#512da8</color>
+	<color name="colorError">#B00020</color>
 
 	<color name="text_primary">#de000000</color>
-
+	<color name="divider">#1F000000</color>
 	<color name="toolbar_shadow">#33000000</color>
 
 	<color name="teacher_default_color">#FF0000</color>
