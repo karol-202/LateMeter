@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
-import pl.karol202.latemeter.utils.ItemDivider
 import pl.karol202.latemeter.R
+import pl.karol202.latemeter.utils.ItemDivider
 
 class ScheduleScreen : Fragment()
 {
@@ -61,6 +61,7 @@ class ScheduleScreen : Fragment()
 		}
 		schedule.saveSchedule(requireContext())
 		adapter.notifyItemInserted(position)
+		sortScheduleHours()
 		adapter.notifyItemRangeChanged(0, schedule.size - 1)
 	}
 
@@ -75,6 +76,7 @@ class ScheduleScreen : Fragment()
 	{
 		scheduleHour.start = Schedule.Time(hour, minute)
 		schedule.saveSchedule(requireContext())
+		sortScheduleHours()
 		adapter.notifyItemRangeChanged(0, schedule.size)
 	}
 
@@ -89,6 +91,7 @@ class ScheduleScreen : Fragment()
 	{
 		scheduleHour.end = Schedule.Time(hour, minute)
 		schedule.saveSchedule(requireContext())
+		sortScheduleHours()
 		adapter.notifyItemRangeChanged(0, schedule.size)
 	}
 
@@ -108,6 +111,17 @@ class ScheduleScreen : Fragment()
 		schedule.removeScheduleHour(scheduleHour)
 		schedule.saveSchedule(requireContext())
 		adapter.notifyItemRemoved(position)
+		sortScheduleHours()
 		adapter.notifyItemRangeChanged(0, schedule.size)
+	}
+
+	private fun sortScheduleHours()
+	{
+		val update = schedule.sortSchedule()
+		when(update)
+		{
+			is Schedule.FullUpdate -> adapter.notifyDataSetChanged()
+			is Schedule.MoveUpdate -> adapter.notifyItemMoved(update.from, update.to)
+		}
 	}
 }

@@ -31,7 +31,7 @@ class Schedule private constructor(context: Context)
 		}
 	}
 
-	class ScheduleHour(@Transient var schedule: Schedule, _start: Time, _end: Time, @Transient var error: Error? = null)
+	class ScheduleHour(@Transient var schedule: Schedule, _start: Time, _end: Time)
 	{
 		var start = _start
 			set(value)
@@ -47,12 +47,53 @@ class Schedule private constructor(context: Context)
 				schedule.checkSchedule()
 			}
 
+		@Transient
+		var error: Error? = null
+			private set
+		val valid: Boolean
+			get() = start.valid && end.valid
+
 		init
 		{
 			schedule.checkSchedule()
 		}
 
-		fun overlapsWith(other: ScheduleHour) = start in other.start..other.end
+		fun checkError()
+		{
+			error = when
+			{
+				!start.valid || !end.valid -> Error.INVALID
+				start >= end -> Error.NEGATIVE_TIMESPAN
+				else -> {
+					var overlaps = false
+					for(comparedHour in schedule.scheduleHours)
+						if(comparedHour != this && overlapsWith(comparedHour)) overlaps = true
+					if(overlaps) Error.OVERLAP else null
+				}
+			}
+		}
+
+		private fun overlapsWith(other: ScheduleHour) = start in other.start..other.end
+
+		override fun equals(other: Any?): Boolean
+		{
+			if(this === other) return true
+			if(javaClass != other?.javaClass) return false
+
+			other as ScheduleHour
+
+			if(start != other.start) return false
+			if(end != other.end) return false
+
+			return true
+		}
+
+		override fun hashCode(): Int
+		{
+			var result = start.hashCode()
+			result = 31 * result + end.hashCode()
+			return result
+		}
 	}
 
 	private val KEY_LENGTH = "schedule_length"
@@ -93,22 +134,44 @@ class Schedule private constructor(context: Context)
 
 	fun getIndexOf(scheduleHour: ScheduleHour) = scheduleHours.indexOf(scheduleHour)
 
-	private fun checkSchedule()
+	interface OrderUpdate
+	class MoveUpdate(val from: Int, val to: Int) : OrderUpdate
+	class FullUpdate : OrderUpdate
+
+	fun sortSchedule(): OrderUpdate?
 	{
-		for(scheduleHour in scheduleHours)
+		scheduleHours.forEach { if(!it.valid) return null }
+		if(scheduleHours == scheduleHours.sortedBy { it.start }) return null
+
+		val operation = findSingularSwap()
+		scheduleHours.sortBy { it.start }
+		return operation ?: FullUpdate()
+	}
+
+	private fun findSingularSwap(): OrderUpdate?
+	{
+		var last: Time? = null
+		for(i in 0 until size)
 		{
-			scheduleHour.error = when
+			val current = scheduleHours[i].start
+			if(last == null || current >= last) last = current
+			else
 			{
-				!scheduleHour.start.valid || !scheduleHour.end.valid -> Error.INVALID
-				scheduleHour.start >= scheduleHour.end -> Error.NEGATIVE_TIMESPAN
-				else -> {
-					var overlaps = false
-					for(comparedHour in scheduleHours)
-						if(comparedHour != scheduleHour && scheduleHour.overlapsWith(comparedHour)) overlaps = true
-					if(overlaps) Error.OVERLAP else null
+				val hoursWithoutCurrent = scheduleHours.toMutableList().filter { it.start != current }
+				if(hoursWithoutCurrent != hoursWithoutCurrent.sortedBy { it.start }) return FullUpdate()
+				else
+				{
+					for(j in 0 until i)
+						if(scheduleHours[j].start > current) return MoveUpdate(i, j)
 				}
 			}
 		}
+		return null
+	}
+
+	private fun checkSchedule()
+	{
+		scheduleHours.forEach { it.checkError() }
 	}
 
 	private fun loadSchedule(context: Context)
