@@ -1,27 +1,35 @@
 package pl.karol202.latemeter.main
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.tabs.TabLayout
 import pl.karol202.latemeter.R
+import pl.karol202.latemeter.schedule.Schedule
+import pl.karol202.latemeter.utils.findView
 
 class MainActivity : AppCompatActivity()
 {
 	private val KEY_SCREEN = "screen"
 
-	private val toolbar by lazy { findViewById<Toolbar>(R.id.toolbar) }
-	private val drawerLayout by lazy { findViewById<DrawerLayout>(R.id.drawer_layout_main) }
-	private val navigationViewScreens by lazy { findViewById<NavigationView>(R.id.navigation_view_screens) }
+	val schedule by lazy { Schedule.loadSchedule(this) }
 
-	private var screen: Screen = Screen.LATENESS
+	private val toolbar by lazy { findView<Toolbar>(R.id.toolbar) }
+	val tabLayout by lazy { findView<TabLayout>(R.id.tabLayout_main) }
+	private val drawerLayout by lazy { findView<DrawerLayout>(R.id.drawerLayout_main) }
+	private val navigationViewScreens by lazy { findView<NavigationView>(R.id.navigation_view_screens) }
+
+	private var screen: Screens? = null
 		set(value)
 		{
+			if(value == null) throw Exception("Cannot set null screen")
 			field = value
+			navigationViewScreens.setCheckedItem(value.id)
 			updateScreen()
 		}
 
@@ -31,32 +39,31 @@ class MainActivity : AppCompatActivity()
         setContentView(R.layout.activity_main)
 	    restoreState(savedInstanceState)
 
-		setSupportActionBar(toolbar)
+	    setSupportActionBar(toolbar)
 	    val actionBar = supportActionBar ?: throw Exception("No action bar")
 	    actionBar.setDisplayHomeAsUpEnabled(true)
 	    actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp)
 
-	    navigationViewScreens.setCheckedItem(screen.id)
 	    navigationViewScreens.setNavigationItemSelectedListener { onScreenItemSelected(it) }
     }
 
 	private fun restoreState(state: Bundle?)
 	{
 		if(state == null) return
-		screen = (state[KEY_SCREEN] as? Screen) ?: return
+		screen = (state[KEY_SCREEN] as? Screens) ?: return
 	}
 
-	override fun onPostCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?)
+	override fun onResume()
 	{
-		super.onPostCreate(savedInstanceState, persistentState)
-		updateScreen()
+		super.onResume()
+		if(screen == null) screen = Screens.LATENESS
 	}
 
-	override fun onSaveInstanceState(outState: Bundle?, outPersistentState: PersistableBundle?)
+	override fun onSaveInstanceState(outState: Bundle?)
 	{
 		if(outState == null) return
 		outState.putSerializable(KEY_SCREEN, screen)
-		super.onSaveInstanceState(outState, outPersistentState)
+		super.onSaveInstanceState(outState)
 	}
 
 	override fun onOptionsItemSelected(item: MenuItem?) = when(item?.itemId)
@@ -70,16 +77,18 @@ class MainActivity : AppCompatActivity()
 
 	private fun onScreenItemSelected(item: MenuItem): Boolean
 	{
-		this.screen = Screen.findScreenById(item.itemId) ?: return false
-		item.isChecked = true
+		screen = Screens.findScreenById(item.itemId) ?: return false
 		drawerLayout.closeDrawers()
 		return true
 	}
 
 	private fun updateScreen()
 	{
+		val screen = (screen ?: throw Exception("Cannot show null screen")).fragmentSupplier()
+		tabLayout.visibility = if(screen.isUsingTabLayout) View.VISIBLE else View.GONE
+
 		val transaction = supportFragmentManager.beginTransaction()
-		transaction.replace(R.id.frame_layout_main, screen.fragmentSupplier())
+		transaction.replace(R.id.frame_main, screen)
 		transaction.commit()
 	}
 }

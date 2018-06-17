@@ -20,6 +20,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import pl.karol202.latemeter.R
+import pl.karol202.latemeter.utils.findView
 
 class TeacherActivity : AppCompatActivity()
 {
@@ -33,12 +34,12 @@ class TeacherActivity : AppCompatActivity()
 		val RESULT_REMOVE = 2
 	}
 
-	private val toolbar by lazy { findViewById<Toolbar>(R.id.toolbar) }
-	private val editTextLayoutName by lazy { findViewById<TextInputLayout>(R.id.editTextLayout_teacher_name) }
-	private val editTextName by lazy { findViewById<TextInputEditText>(R.id.editText_teacher_name) }
-	private val itemTeacherColor by lazy { findViewById<View>(R.id.item_teacher_color) }
-	private val imageTeacherColor by lazy { findViewById<ImageView>(R.id.image_teacher_color) }
-	private val buttonDone by lazy { findViewById<FloatingActionButton>(R.id.button_teacher_done) }
+	private val toolbar by lazy { findView<Toolbar>(R.id.toolbar) }
+	private val editTextLayoutName by lazy { findView<TextInputLayout>(R.id.editTextLayout_teacher_name) }
+	private val editTextName by lazy { findView<TextInputEditText>(R.id.editText_teacher_name) }
+	private val itemTeacherColor by lazy { findView<View>(R.id.item_teacher_color) }
+	private val imageTeacherColor by lazy { findView<ImageView>(R.id.image_teacher_color) }
+	private val buttonDone by lazy { findView<FloatingActionButton>(R.id.button_teacher_done) }
 
 	private val index: Int by lazy { intent.getIntExtra(KEY_INDEX, -1) }
 	private val teacher: Teacher by lazy {

@@ -32,6 +32,14 @@
 
 	<string name="teacher_default_name">Nowy nauczyciel</string>
 
+	<string name="day_monday">Poniedziałek</string>
+	<string name="day_tuesday">Wtorek</string>
+	<string name="day_wednesday">Środa</string>
+	<string name="day_thursday">Czwartek</string>
+	<string name="day_friday">Piątek</string>
+	<string name="day_saturday">Sobota</string>
+	<string name="day_sunday">Niedziela</string>
+
 	<string name="hour_separator">-</string>
 	<string name="unknown">Nieznany</string>
 	<string name="hour_unknown">00:00</string>

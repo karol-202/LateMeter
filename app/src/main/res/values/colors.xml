@@ -9,7 +9,7 @@
 	<color name="divider">#1F000000</color>
 	<color name="toolbar_shadow">#33000000</color>
 
-	<color name="teacher_default_color">#FF0000</color>
+	<color name="teacher_default_color">#F44336</color>
 
 	<array name="teacher_colors">
 		<item>#FFCDD2</item>

@@ -5,13 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import pl.karol202.latemeter.R
+import pl.karol202.latemeter.main.Screen
+import pl.karol202.latemeter.utils.findView
 
-class TeachersScreen : Fragment()
+class TeachersScreen : Screen()
 {
 	private val REQUEST_EDIT_TEACHER = 1
 	private val REQUEST_ADD_TEACHER = 2
@@ -24,11 +25,11 @@ class TeachersScreen : Fragment()
 	{
 		val view = inflater.inflate(R.layout.screen_teachers, container, false)
 
-		val recyclerTeachers = view.findViewById<RecyclerView>(R.id.recycler_teachers)
+		val recyclerTeachers = view.findView<RecyclerView>(R.id.recycler_teachers)
 		recyclerTeachers.layoutManager = LinearLayoutManager(requireContext())
 		recyclerTeachers.adapter = adapter
 
-		val buttonAddTeacher = view.findViewById<FloatingActionButton>(R.id.button_add_teacher)
+		val buttonAddTeacher = view.findView<FloatingActionButton>(R.id.button_add_teacher)
 		buttonAddTeacher.setOnClickListener { addTeacher() }
 
 		return view

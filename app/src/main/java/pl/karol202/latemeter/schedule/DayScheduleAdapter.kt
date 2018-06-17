@@ -10,15 +10,15 @@ import androidx.recyclerview.widget.RecyclerView
 import pl.karol202.latemeter.R
 import java.util.*
 
-class ScheduleAdapter(private val context: Context, private val schedule: Schedule, private val listener: OnScheduleHourListener) : RecyclerView.Adapter<ScheduleAdapter.ViewHolder>()
+class DayScheduleAdapter(private val context: Context, private val daySchedule: DaySchedule, private val listener: OnScheduleHourListener) : RecyclerView.Adapter<DayScheduleAdapter.ViewHolder>()
 {
 	interface OnScheduleHourListener
 	{
-		fun onStartHourChange(scheduleHour: Schedule.ScheduleHour)
+		fun onStartHourChange(scheduleHour: ScheduleHour)
 
-		fun onEndHourChange(scheduleHour: Schedule.ScheduleHour)
+		fun onEndHourChange(scheduleHour: ScheduleHour)
 
-		fun onRemove(scheduleHour: Schedule.ScheduleHour)
+		fun onRemove(scheduleHour: ScheduleHour)
 	}
 
 	inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
@@ -29,7 +29,7 @@ class ScheduleAdapter(private val context: Context, private val schedule: Schedu
 		private val imageRemove = view.findViewById<ImageView>(R.id.image_schedule_hour_remove)
 		private val textError = view.findViewById<TextView>(R.id.text_schedule_hour_error)
 
-		private var scheduleHour: Schedule.ScheduleHour? = null
+		private var scheduleHour: ScheduleHour? = null
 
 		init
 		{
@@ -38,7 +38,7 @@ class ScheduleAdapter(private val context: Context, private val schedule: Schedu
 			imageRemove.setOnClickListener { scheduleHour?.let { listener.onRemove(it) } }
 		}
 
-		fun bind(ordinal: Int, scheduleHour: Schedule.ScheduleHour)
+		fun bind(ordinal: Int, scheduleHour: ScheduleHour)
 		{
 			this.scheduleHour = scheduleHour
 
@@ -50,7 +50,7 @@ class ScheduleAdapter(private val context: Context, private val schedule: Schedu
 			textError.visibility = if(scheduleHour.error != null) View.VISIBLE else View.GONE
 		}
 
-		private fun formatTime(time: Schedule.Time): String
+		private fun formatTime(time: ScheduleHour.Time): String
 		{
 			val format = android.text.format.DateFormat.getTimeFormat(context)
 			val calendar = GregorianCalendar.getInstance()
@@ -66,10 +66,10 @@ class ScheduleAdapter(private val context: Context, private val schedule: Schedu
 		return ViewHolder(view)
 	}
 
-	override fun getItemCount() = schedule.size
+	override fun getItemCount() = daySchedule.size
 
 	override fun onBindViewHolder(holder: ViewHolder, position: Int)
 	{
-		holder.bind(position, schedule[position])
+		holder.bind(position, daySchedule[position])
 	}
 }

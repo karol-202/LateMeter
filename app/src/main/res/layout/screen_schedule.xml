@@ -6,12 +6,11 @@
 	android:layout_height="match_parent"
 	android:id="@+id/coordinator_schedule">
 
-	<androidx.recyclerview.widget.RecyclerView
+	<androidx.viewpager.widget.ViewPager
 		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:id="@+id/recycler_schedule"
-		app:layout_behavior="@string/appbar_scrolling_view_behavior">
-	</androidx.recyclerview.widget.RecyclerView>
+		android:layout_height="wrap_content"
+		android:id="@+id/viewPager_schedule"
+		app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
 	<com.google.android.material.floatingactionbutton.FloatingActionButton
 		android:layout_width="match_parent"
@@ -19,7 +18,7 @@
 		app:srcCompat="@drawable/ic_add_white_24dp"
 		android:id="@+id/button_add_schedule_hour"
 		app:fabSize="normal"
-		app:layout_anchor="@id/recycler_schedule"
+		app:layout_anchor="@id/viewPager_schedule"
 		app:layout_anchorGravity="bottom|right"
 		android:layout_marginEnd="16dp"
 		android:layout_marginBottom="16dp"/>
