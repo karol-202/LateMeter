@@ -6,6 +6,7 @@
 		<item name="colorError">@color/colorError</item>
 		<item name="windowActionBar">false</item>
 		<item name="windowNoTitle">true</item>
+		<item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
 	</style>
 
 	<style name="AppTheme.ImageButton.Borderless" parent="Widget.AppCompat.ImageButton">

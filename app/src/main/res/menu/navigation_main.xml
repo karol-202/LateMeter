@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-	<group android:checkableBehavior="single">
+	<group android:id="@+id/group_screens"
+		android:checkableBehavior="single">
 		<item android:id="@+id/item_screen_lateness"
 			android:icon="@drawable/ic_lateness_black_24dp"
 			android:title="@string/screen_lateness"/>
@@ -10,5 +11,10 @@
 		<item android:id="@+id/item_screen_schedule"
 			android:icon="@drawable/ic_schedule_black_24dp"
 			android:title="@string/screen_schedule"/>
+	</group>
+	<group android:id="@+id/group_settings">
+		<item android:id="@+id/item_settings"
+			android:icon="@drawable/ic_settings_black_24dp"
+			android:title="@string/item_settings"/>
 	</group>
 </menu>

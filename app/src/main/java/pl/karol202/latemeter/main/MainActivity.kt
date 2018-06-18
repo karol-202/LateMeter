@@ -1,5 +1,6 @@
 package pl.karol202.latemeter.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.tabs.TabLayout
 import pl.karol202.latemeter.R
+import pl.karol202.latemeter.preference.SettingsActivity
 import pl.karol202.latemeter.schedule.Schedule
 import pl.karol202.latemeter.utils.findView
 
@@ -22,14 +24,14 @@ class MainActivity : AppCompatActivity()
 	private val toolbar by lazy { findView<Toolbar>(R.id.toolbar) }
 	val tabLayout by lazy { findView<TabLayout>(R.id.tabLayout_main) }
 	private val drawerLayout by lazy { findView<DrawerLayout>(R.id.drawerLayout_main) }
-	private val navigationViewScreens by lazy { findView<NavigationView>(R.id.navigation_view_screens) }
+	private val navigationView by lazy { findView<NavigationView>(R.id.navigation_view_main) }
 
 	private var screen: Screens? = null
 		set(value)
 		{
 			if(value == null) throw Exception("Cannot set null screen")
 			field = value
-			navigationViewScreens.setCheckedItem(value.id)
+			navigationView.setCheckedItem(value.id)
 			updateScreen()
 		}
 
@@ -44,7 +46,7 @@ class MainActivity : AppCompatActivity()
 	    actionBar.setDisplayHomeAsUpEnabled(true)
 	    actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp)
 
-	    navigationViewScreens.setNavigationItemSelectedListener { onScreenItemSelected(it) }
+	    navigationView.setNavigationItemSelectedListener { onNavigationItemSelected(it) }
     }
 
 	private fun restoreState(state: Bundle?)
@@ -75,10 +77,29 @@ class MainActivity : AppCompatActivity()
 		else -> super.onOptionsItemSelected(item)
 	}
 
+	private fun onNavigationItemSelected(item: MenuItem): Boolean
+	{
+		drawerLayout.closeDrawers()
+		return when(item.itemId)
+		{
+			R.id.item_settings ->
+			{
+				startSettingsActivity()
+				true
+			}
+			else -> onScreenItemSelected(item)
+		}
+	}
+
+	private fun startSettingsActivity()
+	{
+		val intent = Intent(this, SettingsActivity::class.java)
+		startActivity(intent)
+	}
+
 	private fun onScreenItemSelected(item: MenuItem): Boolean
 	{
 		screen = Screens.findScreenById(item.itemId) ?: return false
-		drawerLayout.closeDrawers()
 		return true
 	}
 

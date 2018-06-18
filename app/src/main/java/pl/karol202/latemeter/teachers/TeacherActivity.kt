@@ -43,7 +43,7 @@ class TeacherActivity : AppCompatActivity()
 
 	private val index: Int by lazy { intent.getIntExtra(KEY_INDEX, -1) }
 	private val teacher: Teacher by lazy {
-		(intent.getSerializableExtra(KEY_TEACHER) as? Teacher) ?: Teacher(getString(R.string.teacher_default_name), ResourcesCompat.getColor(resources, R.color.teacher_default_color, null))
+		(intent.getSerializableExtra(KEY_TEACHER) as? Teacher) ?: Teacher(getString(R.string.default_teacher_name), ResourcesCompat.getColor(resources, R.color.teacher_default_color, null))
 	}
 
 	private var newColor: Int? = null

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<pl.karol202.latemeter.preference.SummarizedEditTextPreference
+		android:defaultValue="@string/default_schedule_hour_duration"
+		android:selectAllOnFocus="true"
+		android:title="@string/preference_schedule_hour_duration"
+		android:key="preference_schedule_hour_duration"
+		android:inputType="number"/>
+</PreferenceScreen>

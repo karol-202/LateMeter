@@ -1,6 +1,7 @@
 <resources>
 	<string name="app_name">LateMeter</string>
 	<string name="activity_teacher">Edytuj nauczyciela</string>
+	<string name="activity_settings">Ustawienia</string>
 
 	<string name="screen_lateness">Spóźnienie</string>
 	<string name="screen_teachers">Nauczyciele</string>
@@ -13,6 +14,7 @@
 	<string name="dialog_schedule_hour_remove_message">Wszystkie powiązania nauczycieli z tą godziną lekcyjną
 		zostaną usunięte</string>
 
+	<string name="item_settings">Ustawienia</string>
 	<string name="item_teacher_remove">Usuń nauczyciela</string>
 
 	<string name="hint_teacher_name">Imię i nazwisko</string>
@@ -30,7 +32,16 @@
 		rozpoczęcia</string>
 	<string name="error_schedule_hour_overlap">Godziny lekcyjne nie mogą się pokrywać</string>
 
-	<string name="teacher_default_name">Nowy nauczyciel</string>
+	<string name="preference_schedule_hour_duration">Domyślny czas trwania lekcji</string>
+	<plurals name="preference_schedule_hour_duration_value">
+		<item quantity="one">%d minuta</item>
+		<item quantity="two">%d minuty</item>
+		<item quantity="few">%d minuty</item>
+		<item quantity="other">%d minut</item>
+	</plurals>
+
+	<string name="default_teacher_name">Nowy nauczyciel</string>
+	<string name="default_schedule_hour_duration">45</string>
 
 	<string name="day_monday">Poniedziałek</string>
 	<string name="day_tuesday">Wtorek</string>
