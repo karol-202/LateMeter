@@ -11,7 +11,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.tabs.TabLayout
 import pl.karol202.latemeter.R
-import pl.karol202.latemeter.preference.SettingsActivity
+import pl.karol202.latemeter.settings.SettingsActivity
 import pl.karol202.latemeter.schedule.Schedule
 import pl.karol202.latemeter.utils.findView
 

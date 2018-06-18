@@ -1,4 +1,4 @@
-package pl.karol202.latemeter.preference
+package pl.karol202.latemeter.settings
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

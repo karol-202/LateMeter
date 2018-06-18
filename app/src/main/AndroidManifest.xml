@@ -20,7 +20,7 @@
 		<activity android:name=".teachers.TeacherActivity"
 			android:label="@string/activity_teacher"
 			android:parentActivityName=".main.MainActivity"/>
-		<activity android:name=".preference.SettingsActivity"
+		<activity android:name=".settings.SettingsActivity"
 			android:label="@string/activity_settings"
 			android:parentActivityName=".main.MainActivity"/>
 	</application>

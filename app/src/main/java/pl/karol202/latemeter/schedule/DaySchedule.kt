@@ -1,7 +1,7 @@
 package pl.karol202.latemeter.schedule
 
 import android.content.Context
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 import com.google.gson.Gson
 import pl.karol202.latemeter.schedule.ScheduleHour.Time
 
@@ -54,7 +54,6 @@ class DaySchedule(context: Context, val dayOfWeek: DayOfWeek)
 
 	fun sortSchedule(): OrderUpdate?
 	{
-		scheduleHours.forEach { if(!it.valid) return null }
 		if(scheduleHours == scheduleHours.sortedBy { it.start }) return null
 
 		val operation = findSingularSwap()

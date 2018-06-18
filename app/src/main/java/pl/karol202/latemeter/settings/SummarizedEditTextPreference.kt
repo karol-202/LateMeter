@@ -1,4 +1,4 @@
-package pl.karol202.latemeter.preference
+package pl.karol202.latemeter.settings
 
 import android.content.Context
 import android.util.AttributeSet
@@ -13,5 +13,5 @@ class SummarizedEditTextPreference(private val preferenceContext: Context, attrs
 		summary = text
 	}
 
-	override fun getSummary(): CharSequence? = preferenceContext.resources.getQuantityString(R.plurals.preference_schedule_hour_duration_value, text.toInt(), text.toInt())
+	override fun getSummary(): CharSequence? = preferenceContext.resources.getQuantityString(R.plurals.setting_schedule_hour_duration_summary, text.toInt(), text.toInt())
 }

@@ -27,13 +27,13 @@
 	<string name="message_schedule_full">Nie można dodać nowego elementu</string>
 
 	<string name="error_teacher_name_blank">Nazwa nie może być pusta</string>
-	<string name="error_schedule_hour_invalid">Niewłaściwa godzina</string>
 	<string name="error_schedule_hour_negative_timespan">Godzina zakończenia musi być późniejsza niż godzina
 		rozpoczęcia</string>
 	<string name="error_schedule_hour_overlap">Godziny lekcyjne nie mogą się pokrywać</string>
 
-	<string name="preference_schedule_hour_duration">Domyślny czas trwania lekcji</string>
-	<plurals name="preference_schedule_hour_duration_value">
+	<string name="setting_schedule_hour_duration_key" translatable="false">preference_schedule_hour_duration</string>
+	<string name="setting_schedule_hour_duration_title">Domyślny czas trwania lekcji</string>
+	<plurals name="setting_schedule_hour_duration_summary">
 		<item quantity="one">%d minuta</item>
 		<item quantity="two">%d minuty</item>
 		<item quantity="few">%d minuty</item>
