@@ -4,50 +4,66 @@ import android.content.Context
 import android.preference.PreferenceManager
 import com.google.gson.Gson
 import java.io.Serializable
+import java.util.*
 
 data class Teacher(var name: String, var color: Int) : Serializable
+{
+	companion object
+	{
+		fun createUniqueID() = UUID.randomUUID().toString()
+	}
+}
 
 class Teachers private constructor(context: Context)
 {
 	private val KEY_LENGTH = "teachers_length"
-	private val KEY_TEACHER_N = "teachers_"
+	private val KEY_TEACHER_ID = "teacher_%d_id"
+	private val KEY_TEACHER_CONTENT = "teacher_%d_content"
 
-	private val list = mutableListOf<Teacher>()
+	private val teachers = mutableMapOf<String, Teacher>()
 
 	val size: Int
-		get() = list.size
+		get() = teachers.size
 
 	init
 	{
 	    loadTeachers(context)
 	}
 
-	operator fun get(index: Int) = list[index]
+	data class TeacherWithId(val id: String, val teacher: Teacher)
+	fun sortedBy(comparator: Comparator<in TeacherWithId>) =
+			teachers.entries.map { TeacherWithId(it.key, it.value) }.sortedWith(comparator)
 
-	operator fun set(index: Int, teacher: Teacher)
+	operator fun get(id: String) = teachers[id]
+
+	operator fun set(id: String, teacher: Teacher)
 	{
-		list[index] = teacher
+		teachers[id] = teacher
 	}
 
 	fun addTeacher(teacher: Teacher)
 	{
-		list.add(teacher)
+		teachers[Teacher.createUniqueID()] = teacher
 	}
 
-	fun removeTeacher(index: Int)
+	fun removeTeacher(id: String)
 	{
-		list.removeAt(index)
+		teachers.remove(id)
 	}
 
 	private fun loadTeachers(context: Context)
 	{
-		list.clear()
+		teachers.clear()
 
 		val gson = Gson()
 		val prefs = PreferenceManager.getDefaultSharedPreferences(context)
 		val length = prefs.getInt(KEY_LENGTH, 0)
 		for(i in 0 until length)
-			list.add(gson.fromJson(prefs.getString(KEY_TEACHER_N + i, ""), Teacher::class.java))
+		{
+			val id = prefs.getString(String.format(KEY_TEACHER_ID, i), null) ?: continue
+			val content = prefs.getString(String.format(KEY_TEACHER_CONTENT, i), null) ?: continue
+			teachers[id] = gson.fromJson(content, Teacher::class.java)
+		}
 	}
 
 	fun saveTeachers(context: Context)
@@ -56,7 +72,11 @@ class Teachers private constructor(context: Context)
 		val editor = PreferenceManager.getDefaultSharedPreferences(context).edit()
 		editor.putInt(KEY_LENGTH, size)
 		for(i in 0 until size)
-			editor.putString(KEY_TEACHER_N + i, gson.toJson(list[i]))
+		{
+			val id = teachers.keys.elementAt(i)
+			editor.putString(String.format(KEY_TEACHER_ID, i), id)
+			editor.putString(String.format(KEY_TEACHER_CONTENT, i), gson.toJson(teachers[id]))
+		}
 		editor.apply()
 	}
 

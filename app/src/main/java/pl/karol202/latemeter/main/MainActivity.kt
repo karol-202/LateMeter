@@ -11,8 +11,8 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.tabs.TabLayout
 import pl.karol202.latemeter.R
-import pl.karol202.latemeter.settings.SettingsActivity
 import pl.karol202.latemeter.schedule.Schedule
+import pl.karol202.latemeter.settings.SettingsActivity
 import pl.karol202.latemeter.utils.findView
 
 class MainActivity : AppCompatActivity()
@@ -105,11 +105,14 @@ class MainActivity : AppCompatActivity()
 
 	private fun updateScreen()
 	{
-		val screen = (screen ?: throw Exception("Cannot show null screen")).fragmentSupplier()
-		tabLayout.visibility = if(screen.isUsingTabLayout) View.VISIBLE else View.GONE
+		val fragment = (screen ?: throw Exception("Cannot show null screen")).fragmentSupplier()
+		tabLayout.visibility = if(fragment.isUsingTabLayout) View.VISIBLE else View.GONE
+
+		val currentFragment = supportFragmentManager.findFragmentById(R.id.frame_main)
+		if(currentFragment != null && currentFragment::class == fragment::class) return
 
 		val transaction = supportFragmentManager.beginTransaction()
-		transaction.replace(R.id.frame_main, screen)
+		transaction.replace(R.id.frame_main, fragment)
 		transaction.commit()
 	}
 }

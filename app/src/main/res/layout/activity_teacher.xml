@@ -64,7 +64,7 @@
 
 			<LinearLayout
 				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
+				android:layout_height="48dp"
 				android:focusable="true"
 				android:clickable="true"
 				android:background="?android:attr/selectableItemBackground"
@@ -76,9 +76,8 @@
 					android:layout_height="24dp"
 					app:srcCompat="@drawable/teacher_avatar"
 					android:id="@+id/image_teacher_color"
-					android:layout_marginTop="8dp"
-					android:layout_marginBottom="8dp"
-					android:layout_marginStart="16dp"/>
+					android:layout_marginStart="16dp"
+					android:layout_gravity="center_vertical"/>
 
 				<TextView
 					android:text="@string/text_teacher_color"

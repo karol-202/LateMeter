@@ -26,7 +26,7 @@ class TeacherActivity : AppCompatActivity()
 {
 	companion object
 	{
-		val KEY_INDEX = "index"
+		val KEY_ID = "id"
 		val KEY_TEACHER = "teacher"
 
 		val RESULT_CANCEL = 0
@@ -41,7 +41,7 @@ class TeacherActivity : AppCompatActivity()
 	private val imageTeacherColor by lazy { findView<ImageView>(R.id.image_teacher_color) }
 	private val buttonDone by lazy { findView<FloatingActionButton>(R.id.button_teacher_done) }
 
-	private val index: Int by lazy { intent.getIntExtra(KEY_INDEX, -1) }
+	private val id: String? by lazy { intent.getStringExtra(KEY_ID) ?: null }
 	private val teacher: Teacher by lazy {
 		(intent.getSerializableExtra(KEY_TEACHER) as? Teacher) ?: Teacher(getString(R.string.default_teacher_name), ResourcesCompat.getColor(resources, R.color.teacher_default_color, null))
 	}
@@ -81,7 +81,7 @@ class TeacherActivity : AppCompatActivity()
 	override fun onCreateOptionsMenu(menu: Menu?): Boolean
 	{
 		menuInflater.inflate(R.menu.activity_teachers, menu)
-		return super.onCreateOptionsMenu(menu)
+		return true
 	}
 
 	override fun onOptionsItemSelected(item: MenuItem?) = when(item?.itemId)
@@ -122,7 +122,7 @@ class TeacherActivity : AppCompatActivity()
 		newColor?.let { teacher.color = it }
 
 		val intent = Intent()
-		intent.putExtra(KEY_INDEX, index)
+		intent.putExtra(KEY_ID, id)
 		intent.putExtra(KEY_TEACHER, teacher)
 		setResult(RESULT_OK, intent)
 		finish()
@@ -150,7 +150,7 @@ class TeacherActivity : AppCompatActivity()
 	private fun removeTeacher()
 	{
 		val intent = Intent()
-		intent.putExtra(KEY_INDEX, index)
+		intent.putExtra(KEY_ID, id)
 		intent.putExtra(KEY_TEACHER, teacher)
 		setResult(RESULT_REMOVE, intent)
 		finish()

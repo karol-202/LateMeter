@@ -7,7 +7,8 @@
 	<string name="screen_teachers">Nauczyciele</string>
 	<string name="screen_schedule">Godziny lekcyjne</string>
 
-	<string name="dialog_teacher_remove">Czy na pewno chcesz usunąć?</string>
+	<string name="dialog_sorting">Sortuj</string>
+	<string name="dialog_teacher_remove">Czy na pewno chcesz usunąć nauczyciela?</string>
 	<string name="dialog_teacher_remove_message">Wszystkie dane nauczyciela zostaną usunięte</string>
 	<string name="dialog_teacher_color">Wybierz kolor</string>
 	<string name="dialog_schedule_hour_remove">Czy na pewno chcesz usunąć?</string>
@@ -15,12 +16,14 @@
 		zostaną usunięte</string>
 
 	<string name="item_settings">Ustawienia</string>
+	<string name="item_teachers_sort">Sortuj</string>
 	<string name="item_teacher_remove">Usuń nauczyciela</string>
 
-	<string name="hint_teacher_name">Imię i nazwisko</string>
-
 	<string name="button_delete">Usuń</string>
+	<string name="button_sort">Sortuj</string>
 	<string name="button_cancel">Anuluj</string>
+
+	<string name="hint_teacher_name">Imię i nazwisko</string>
 
 	<string name="text_teacher_color">Wybierz kolor</string>
 
@@ -40,9 +43,6 @@
 		<item quantity="other">%d minut</item>
 	</plurals>
 
-	<string name="default_teacher_name">Nowy nauczyciel</string>
-	<string name="default_schedule_hour_duration">45</string>
-
 	<string name="day_monday">Poniedziałek</string>
 	<string name="day_tuesday">Wtorek</string>
 	<string name="day_wednesday">Środa</string>
@@ -50,6 +50,12 @@
 	<string name="day_friday">Piątek</string>
 	<string name="day_saturday">Sobota</string>
 	<string name="day_sunday">Niedziela</string>
+
+	<string name="teachers_sorting_by_name_ascending">Od A do Z</string>
+	<string name="teachers_sorting_by_name_descending">Od Z do A</string>
+
+	<string name="default_teacher_name">Nowy nauczyciel</string>
+	<string name="default_schedule_hour_duration">45</string>
 
 	<string name="hour_separator">-</string>
 	<string name="unknown">Nieznany</string>
