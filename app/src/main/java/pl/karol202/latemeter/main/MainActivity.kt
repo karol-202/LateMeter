@@ -13,12 +13,14 @@ import com.google.android.material.tabs.TabLayout
 import pl.karol202.latemeter.R
 import pl.karol202.latemeter.schedule.Schedule
 import pl.karol202.latemeter.settings.SettingsActivity
+import pl.karol202.latemeter.teachers.Teachers
 import pl.karol202.latemeter.utils.findView
 
 class MainActivity : AppCompatActivity()
 {
 	private val KEY_SCREEN = "screen"
 
+	val teachers by lazy { Teachers.loadTeachers(this) }
 	val schedule by lazy { Schedule.loadSchedule(this) }
 
 	private val toolbar by lazy { findView<Toolbar>(R.id.toolbar) }

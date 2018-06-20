@@ -2,7 +2,7 @@ package pl.karol202.latemeter.schedule
 
 import pl.karol202.latemeter.R
 
-class ScheduleHour(@Transient var daySchedule: DaySchedule, _start: Time, _end: Time)
+class ScheduleHour(@Transient var daySchedule: DaySchedule, _start: Time, _end: Time, var teacher: String?)
 {
 	enum class Error(val message: Int)
 	{

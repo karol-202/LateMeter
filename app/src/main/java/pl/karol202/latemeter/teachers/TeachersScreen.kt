@@ -21,10 +21,10 @@ class TeachersScreen : Screen()
 		private const val REQUEST_ADD_TEACHER = 2
 	}
 
-	private val teachers by lazy { Teachers.loadTeachers(requireContext()) }
+	private val teachers by lazy { requireMainActivity().teachers }
 	private val adapter by lazy { TeachersAdapter(requireContext(), teachers, sorting) { i, t -> editTeacher(i, t) } }
 
-	private var sorting: TeachersAdapter.Sorting = TeachersAdapter.Sorting.BY_NAME_ASCENDING
+	private var sorting: Teachers.Sorting = Teachers.Sorting.BY_NAME_ASCENDING
 		set(value)
 		{
 			field = value
@@ -50,7 +50,7 @@ class TeachersScreen : Screen()
 	private fun restoreState(state: Bundle?)
 	{
 		if(state == null) return
-		sorting = state.getSerializable(KEY_SORTING) as TeachersAdapter.Sorting
+		sorting = state.getSerializable(KEY_SORTING) as Teachers.Sorting
 	}
 
 	override fun onSaveInstanceState(outState: Bundle)
@@ -80,7 +80,7 @@ class TeachersScreen : Screen()
 		val builder = AlertDialog.Builder(requireContext())
 		builder.setTitle(R.string.dialog_sorting)
 		builder.setSingleChoiceItems(getSortingMethodsArray(), sorting.ordinal) { _, which ->
-			sorting = TeachersAdapter.Sorting.values()[which]
+			sorting = Teachers.Sorting.values()[which]
 		}
 		builder.setPositiveButton(R.string.button_sort) { _, _ ->
 			this.sorting = sorting
@@ -91,7 +91,7 @@ class TeachersScreen : Screen()
 	}
 
 	private fun getSortingMethodsArray() =
-			TeachersAdapter.Sorting.values().map { requireContext().getString(it.text) }.toTypedArray()
+			Teachers.Sorting.values().map { requireContext().getString(it.text) }.toTypedArray()
 
 	private fun addTeacher()
 	{

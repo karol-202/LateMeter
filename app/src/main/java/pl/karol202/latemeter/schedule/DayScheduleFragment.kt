@@ -22,6 +22,7 @@ class DayScheduleFragment : AppFragment()
 		const val KEY_DAY_OF_WEEK = "dayOfWeek"
 	}
 
+	private val teachers by lazy { requireMainActivity().teachers }
 	private val daySchedule by lazy { requireMainActivity().schedule.getDaySchedule(dayOfWeek) }
 	private val is24h by lazy { DateFormat.is24HourFormat(requireContext()) }
 	private val defaultScheduleHourDuration by lazy {
@@ -31,17 +32,20 @@ class DayScheduleFragment : AppFragment()
 	private val scheduleScreen by lazy { parentFragment as? ScheduleScreen ?:
 										 throw Exception("DayScheduleFragment can only be used in scheduleScreen") }
 	private val adapter by lazy {
-		DayScheduleAdapter(requireContext(), daySchedule, object : DayScheduleAdapter.OnScheduleHourListener
+		DayScheduleAdapter(requireContext(), daySchedule, teachers, object : DayScheduleAdapter.OnScheduleHourListener
 		{
 			override fun onStartHourChange(scheduleHour: ScheduleHour) = showStartHourPicker(scheduleHour)
 
 			override fun onEndHourChange(scheduleHour: ScheduleHour) = showEndHourPicker(scheduleHour)
 
+			override fun onTeacherChange(scheduleHour: ScheduleHour, teacherId: String) =
+					this@DayScheduleFragment.onTeacherChange(scheduleHour, teacherId)
+
 			override fun onRemove(scheduleHour: ScheduleHour) = showRemovalDialog(scheduleHour)
 		})
 	}
 
-	private val dayOfWeek by lazy { arguments?.getSerializable(KEY_DAY_OF_WEEK) as? DayOfWeek ?: throw Exception("dayOfWeek not passed to fragment") }
+	private val dayOfWeek by lazy {arguments?.getSerializable(KEY_DAY_OF_WEEK) as? DayOfWeek ?: throw Exception("dayOfWeek not passed to fragment") }
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
 	{
@@ -98,6 +102,12 @@ class DayScheduleFragment : AppFragment()
 		daySchedule.saveSchedule(requireContext())
 		sortScheduleHours()
 		adapter.notifyItemRangeChanged(0, daySchedule.size)
+	}
+
+	private fun onTeacherChange(scheduleHour: ScheduleHour, teacherId: String)
+	{
+		scheduleHour.teacher = teacherId
+		daySchedule.saveSchedule(requireContext())
 	}
 
 	private fun showRemovalDialog(scheduleHour: ScheduleHour)

@@ -37,7 +37,7 @@ class DaySchedule(context: Context, val dayOfWeek: DayOfWeek)
 	fun addScheduleHour(start: Time, end: Time): Int?
 	{
 		if(size >= MAX_LENGTH_PER_DAY) return null
-		scheduleHours.add(ScheduleHour(this, start, end))
+		scheduleHours.add(ScheduleHour(this, start, end, null))
 		checkSchedule()
 		return size - 1
 	}

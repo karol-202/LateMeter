@@ -9,14 +9,8 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.RecyclerView
 import pl.karol202.latemeter.R
 
-class TeachersAdapter(private val context: Context, private val teachers: Teachers, var sorting: Sorting, private val listener: (String, Teacher) -> Unit) : RecyclerView.Adapter<TeachersAdapter.ViewHolder>()
+class TeachersAdapter(private val context: Context, private val teachers: Teachers, var sorting: Teachers.Sorting, private val listener: (String, Teacher) -> Unit) : RecyclerView.Adapter<TeachersAdapter.ViewHolder>()
 {
-	enum class Sorting(val text: Int, val comparator: (Teacher, Teacher) -> Int)
-	{
-		BY_NAME_ASCENDING(R.string.teachers_sorting_by_name_ascending, { a, b -> a.name.compareTo(b.name, true) }),
-		BY_NAME_DESCENDING(R.string.teachers_sorting_by_name_descending, { a, b -> b.name.compareTo(a.name, true) });
-	}
-
 	inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
 	{
 		private val imageAvatar = view.findViewById<AppCompatImageView>(R.id.image_teacher_color)
@@ -55,10 +49,7 @@ class TeachersAdapter(private val context: Context, private val teachers: Teache
 
 	override fun onBindViewHolder(holder: ViewHolder, position: Int)
 	{
-		val (id, teacher) = teachers.sortedBy(createComparator(sorting))[position]
+		val (id, teacher) = teachers.sortedBy(sorting)[position]
 		holder.bind(id, teacher)
 	}
-
-	private fun createComparator(sorting: Sorting) =
-			Comparator<Teachers.TeacherWithId> { a, b -> sorting.comparator(a.teacher, b.teacher) }
 }
