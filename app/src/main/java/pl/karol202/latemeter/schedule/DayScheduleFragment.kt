@@ -14,6 +14,7 @@ import pl.karol202.latemeter.R
 import pl.karol202.latemeter.main.AppFragment
 import pl.karol202.latemeter.settings.Settings
 import pl.karol202.latemeter.utils.ItemDivider
+import pl.karol202.latemeter.utils.findView
 
 class DayScheduleFragment : AppFragment()
 {
@@ -51,7 +52,7 @@ class DayScheduleFragment : AppFragment()
 	{
 		val view = inflater.inflate(R.layout.fragment_schedule_day, container, false)
 
-		val recyclerScheduleDay = view.findViewById<RecyclerView>(R.id.recycler_schedule_day)
+		val recyclerScheduleDay = view.findView<RecyclerView>(R.id.recycler_schedule_day)
 		recyclerScheduleDay.layoutManager = LinearLayoutManager(requireContext())
 		recyclerScheduleDay.adapter = adapter
 		recyclerScheduleDay.addItemDecoration(ItemDivider(requireContext()))

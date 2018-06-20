@@ -2,16 +2,32 @@ package pl.karol202.latemeter.schedule
 
 import pl.karol202.latemeter.R
 
-class ScheduleHour(@Transient var daySchedule: DaySchedule, _start: Time, _end: Time, var teacher: String?)
-{
+class ScheduleHour(
+		@Transient var daySchedule: DaySchedule,
+		_start: Time,
+		_end: Time,
+		var teacher: String?
+) {
 	enum class Error(val message: Int)
 	{
 		NEGATIVE_TIMESPAN(R.string.error_schedule_hour_negative_timespan),
 		OVERLAP(R.string.error_schedule_hour_overlap)
 	}
 
-	class Time private constructor(val hour: Int, val minute: Int): Comparable<Time>
+	class Time private constructor(
+			val hour: Int,
+			val minute: Int
+	) : Comparable<Time>
 	{
+		companion object
+		{
+			val zero = createTime(0, 0) ?: throw Exception("Could not create zero time")
+
+			fun fromMinutes(minutes: Int) = createTime(minutes / 60, minutes % 60)
+
+			fun createTime(hour: Int, minute: Int) = if(hour in 0..23 && minute in 0..59) Time(hour, minute) else null
+		}
+
 		init
 		{
 			if(hour !in 0..23 || minute !in 0..59) throw Exception("Invalid time: $hour:$minute")
@@ -53,15 +69,6 @@ class ScheduleHour(@Transient var daySchedule: DaySchedule, _start: Time, _end: 
 			var result = hour
 			result = 31 * result + minute
 			return result
-		}
-
-		companion object
-		{
-			val zero = createTime(0, 0) ?: throw Exception("Could not create zero time")
-
-			fun fromMinutes(minutes: Int) = createTime(minutes / 60, minutes % 60)
-
-			fun createTime(hour: Int, minute: Int) = if(hour in 0..23 && minute in 0..59) Time(hour, minute) else null
 		}
 	}
 

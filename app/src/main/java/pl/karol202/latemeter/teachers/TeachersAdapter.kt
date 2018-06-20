@@ -8,13 +8,21 @@ import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.RecyclerView
 import pl.karol202.latemeter.R
+import pl.karol202.latemeter.utils.findView
 
-class TeachersAdapter(private val context: Context, private val teachers: Teachers, var sorting: Teachers.Sorting, private val listener: (String, Teacher) -> Unit) : RecyclerView.Adapter<TeachersAdapter.ViewHolder>()
+class TeachersAdapter(
+		private val context: Context,
+		private val teachers: Teachers,
+		var sorting: Teachers.Sorting,
+		private val listener: (String, Teacher) -> Unit
+) : RecyclerView.Adapter<TeachersAdapter.ViewHolder>()
 {
-	inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
+	inner class ViewHolder(
+			view: View
+	) : RecyclerView.ViewHolder(view)
 	{
-		private val imageAvatar = view.findViewById<AppCompatImageView>(R.id.image_teacher_color)
-		private val textName = view.findViewById<TextView>(R.id.text_teacher_name)
+		private val imageAvatar = view.findView<AppCompatImageView>(R.id.image_teacher_color)
+		private val textName = view.findView<TextView>(R.id.text_teacher_name)
 
 		private var id: String? = null
 		private var teacher: Teacher? = null

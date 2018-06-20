@@ -7,7 +7,10 @@ import pl.karol202.latemeter.R
 import java.io.Serializable
 import java.util.*
 
-data class Teacher(var name: String, var color: Int) : Serializable
+data class Teacher(
+		var name: String,
+		var color: Int
+) : Serializable
 {
 	companion object
 	{

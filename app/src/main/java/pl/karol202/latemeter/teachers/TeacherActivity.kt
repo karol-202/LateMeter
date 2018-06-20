@@ -26,12 +26,12 @@ class TeacherActivity : AppCompatActivity()
 {
 	companion object
 	{
-		val KEY_ID = "id"
-		val KEY_TEACHER = "teacher"
+		const val KEY_ID = "id"
+		const val KEY_TEACHER = "teacher"
 
-		val RESULT_CANCEL = 0
-		val RESULT_OK = 1
-		val RESULT_REMOVE = 2
+		const val RESULT_CANCEL = 0
+		const val RESULT_OK = 1
+		const val RESULT_REMOVE = 2
 	}
 
 	private val toolbar by lazy { findView<Toolbar>(R.id.toolbar) }
@@ -95,9 +95,9 @@ class TeacherActivity : AppCompatActivity()
 	{
 		var dialog: AlertDialog? = null
 
-		val adapter = TeacherColorsAdapter(this) {
-			newColor = it
-			imageTeacherColor.setColorFilter(it)
+		val adapter = TeacherColorsAdapter(this) { color ->
+			newColor = color
+			imageTeacherColor.setColorFilter(color)
 			dialog?.dismiss()
 		}
 

@@ -3,8 +3,9 @@ package pl.karol202.latemeter.schedule
 import android.content.Context
 import pl.karol202.latemeter.schedule.DayOfWeek.*
 
-class Schedule private constructor(context: Context)
-{
+class Schedule private constructor(
+		context: Context
+) {
 	companion object
 	{
 		fun loadSchedule(context: Context) = Schedule(context)

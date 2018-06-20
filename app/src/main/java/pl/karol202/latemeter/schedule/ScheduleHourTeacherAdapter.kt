@@ -14,8 +14,10 @@ import pl.karol202.latemeter.teachers.Teachers
 import pl.karol202.latemeter.teachers.Teachers.Sorting
 import pl.karol202.latemeter.utils.findView
 
-class ScheduleHourTeacherAdapter private constructor(@get:JvmName("ctx") private val context: Context, teachersWithIds: List<Teachers.TeacherWithId?>) :
-		ArrayAdapter<Teacher>(context, 0, teachersWithIds.map { it?.teacher })
+class ScheduleHourTeacherAdapter private constructor(
+		@get:JvmName("ctx") private val context: Context,
+		teachersWithIds: List<Teachers.TeacherWithId?>
+) : ArrayAdapter<Teacher>(context, 0, teachersWithIds.map { it?.teacher })
 {
 	companion object
 	{

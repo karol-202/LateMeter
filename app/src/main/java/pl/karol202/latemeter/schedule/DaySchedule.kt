@@ -5,8 +5,10 @@ import androidx.preference.PreferenceManager
 import com.google.gson.Gson
 import pl.karol202.latemeter.schedule.ScheduleHour.Time
 
-class DaySchedule(context: Context, val dayOfWeek: DayOfWeek)
-{
+class DaySchedule(
+		context: Context,
+		val dayOfWeek: DayOfWeek
+) {
 	companion object
 	{
 		private const val KEY_LENGTH = "schedule_%s_length"

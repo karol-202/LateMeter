@@ -18,7 +18,10 @@ import pl.karol202.latemeter.utils.findView
 
 class MainActivity : AppCompatActivity()
 {
-	private val KEY_SCREEN = "screen"
+	companion object
+	{
+		private const val KEY_SCREEN = "screen"
+	}
 
 	val teachers by lazy { Teachers.loadTeachers(this) }
 	val schedule by lazy { Schedule.loadSchedule(this) }
@@ -84,8 +87,7 @@ class MainActivity : AppCompatActivity()
 		drawerLayout.closeDrawers()
 		return when(item.itemId)
 		{
-			R.id.item_settings ->
-			{
+			R.id.item_settings -> {
 				startSettingsActivity()
 				true
 			}

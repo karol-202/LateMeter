@@ -5,7 +5,10 @@ import android.util.AttributeSet
 import androidx.preference.EditTextPreference
 import pl.karol202.latemeter.R
 
-class SummarizedEditTextPreference(private val preferenceContext: Context, attrs: AttributeSet) : EditTextPreference(preferenceContext, attrs)
+class SummarizedEditTextPreference(
+		private val preferenceContext: Context,
+		attrs: AttributeSet
+) : EditTextPreference(preferenceContext, attrs)
 {
 	override fun setText(text: String?)
 	{

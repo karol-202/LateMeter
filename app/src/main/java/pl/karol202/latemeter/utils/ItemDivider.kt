@@ -6,7 +6,9 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import pl.karol202.latemeter.R
 
-class ItemDivider(context: Context) : RecyclerView.ItemDecoration()
+class ItemDivider(
+		context: Context
+) : RecyclerView.ItemDecoration()
 {
 	private val divider = ContextCompat.getDrawable(context, R.drawable.item_divider)
 

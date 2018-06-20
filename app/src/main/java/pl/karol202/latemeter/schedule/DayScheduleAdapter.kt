@@ -11,10 +11,15 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import pl.karol202.latemeter.R
 import pl.karol202.latemeter.teachers.Teachers
+import pl.karol202.latemeter.utils.findView
 import java.util.*
 
-class DayScheduleAdapter(private val context: Context, private val daySchedule: DaySchedule, private val teachers: Teachers, private val listener: OnScheduleHourListener) :
-		RecyclerView.Adapter<DayScheduleAdapter.ViewHolder>()
+class DayScheduleAdapter(
+		private val context: Context,
+		private val daySchedule: DaySchedule,
+		private val teachers: Teachers,
+		private val listener: OnScheduleHourListener
+) : RecyclerView.Adapter<DayScheduleAdapter.ViewHolder>()
 {
 	interface OnScheduleHourListener
 	{
@@ -27,16 +32,18 @@ class DayScheduleAdapter(private val context: Context, private val daySchedule: 
 		fun onRemove(scheduleHour: ScheduleHour)
 	}
 
-	inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
+	inner class ViewHolder(
+			view: View
+	) : RecyclerView.ViewHolder(view)
 	{
 		private val teachersAdapter = ScheduleHourTeacherAdapter.create(context, teachers)
 
-		private val textOrdinal = view.findViewById<TextView>(R.id.text_schedule_hour_ordinal)
-		private val textStartHour = view.findViewById<TextView>(R.id.text_schedule_hour_start)
-		private val textEndHour = view.findViewById<TextView>(R.id.text_schedule_hour_end)
-		private val imageRemove = view.findViewById<ImageView>(R.id.image_schedule_hour_remove)
-		private val spinnerTeacher = view.findViewById<Spinner>(R.id.spinner_schedule_hour_teacher)
-		private val textError = view.findViewById<TextView>(R.id.text_schedule_hour_error)
+		private val textOrdinal = view.findView<TextView>(R.id.text_schedule_hour_ordinal)
+		private val textStartHour = view.findView<TextView>(R.id.text_schedule_hour_start)
+		private val textEndHour = view.findView<TextView>(R.id.text_schedule_hour_end)
+		private val imageRemove = view.findView<ImageView>(R.id.image_schedule_hour_remove)
+		private val spinnerTeacher = view.findView<Spinner>(R.id.spinner_schedule_hour_teacher)
+		private val textError = view.findView<TextView>(R.id.text_schedule_hour_error)
 
 		private var scheduleHour: ScheduleHour? = null
 

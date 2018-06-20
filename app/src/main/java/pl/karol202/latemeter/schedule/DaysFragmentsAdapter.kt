@@ -7,15 +7,18 @@ import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import androidx.viewpager.widget.PagerAdapter
 
-class DaysFragmentsAdapter(private val context: Context, private val fragmentManager: FragmentManager) : PagerAdapter()
+class DaysFragmentsAdapter(
+		private val context: Context,
+		private val fragmentManager: FragmentManager
+) : PagerAdapter()
 {
 	private val fragments = mutableMapOf<DayOfWeek, DayScheduleFragment?>(DayOfWeek.MONDAY to null,
-																  DayOfWeek.TUESDAY to null,
-																  DayOfWeek.WEDNESDAY to null,
-																  DayOfWeek.THURSDAY to null,
-																  DayOfWeek.FRIDAY to null,
-																  DayOfWeek.SATURDAY to null,
-																  DayOfWeek.SUNDAY to null)
+																          DayOfWeek.TUESDAY to null,
+																          DayOfWeek.WEDNESDAY to null,
+																          DayOfWeek.THURSDAY to null,
+																          DayOfWeek.FRIDAY to null,
+																          DayOfWeek.SATURDAY to null,
+																          DayOfWeek.SUNDAY to null)
 
 	override fun getCount() = fragments.size
 
