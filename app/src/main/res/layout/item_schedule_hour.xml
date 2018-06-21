@@ -12,14 +12,16 @@
 	<LinearLayout
 		android:orientation="horizontal"
 		android:layout_width="match_parent"
-		android:layout_height="56dp">
+		android:layout_height="56dp"
+		android:layout_marginStart="16dp"
+		android:layout_marginEnd="16dp"
+		android:focusableInTouchMode="true">
 
 		<TextView
 			android:text="@string/unknown"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:id="@+id/text_schedule_hour_ordinal"
-			android:layout_marginStart="16dp"
 			android:layout_gravity="center_vertical"
 			android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"/>
 		<TextView
@@ -73,9 +75,22 @@
 			android:id="@+id/image_schedule_hour_remove"
 			style="@style/AppTheme.ImageButton.Borderless"
 			android:layout_gravity="center_vertical"
-			android:layout_marginEnd="16dp"
 			android:alpha="0.84"/>
 	</LinearLayout>
+	<com.google.android.material.textfield.TextInputLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_marginStart="16dp"
+		android:layout_marginEnd="16dp"
+		android:id="@+id/editTextLayout_schedule_hour_subject"
+		android:layout_marginBottom="8dp">
+
+		<com.google.android.material.textfield.TextInputEditText
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:hint="@string/hint_schedule_hour_name"
+			android:id="@+id/editText_schedule_hour_subject"/>
+	</com.google.android.material.textfield.TextInputLayout>
 	<Spinner
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"

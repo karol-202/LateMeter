@@ -27,8 +27,8 @@ class DayScheduleFragment : AppFragment()
 	private val daySchedule by lazy { requireMainActivity().schedule.getDaySchedule(dayOfWeek) }
 	private val is24h by lazy { DateFormat.is24HourFormat(requireContext()) }
 	private val defaultScheduleHourDuration by lazy {
-		ScheduleHour.Time.fromMinutes(Settings.getSetting(requireContext(), Settings.DEFAULT_SCHEDULE_HOUR_DURATION)) ?:
-		ScheduleHour.Time.zero }
+		Time.fromMinutes(Settings.getSetting(requireContext(), Settings.DEFAULT_SCHEDULE_HOUR_DURATION)) ?:
+		Time.zero }
 
 	private val scheduleScreen by lazy { parentFragment as? ScheduleScreen ?:
 										 throw Exception("DayScheduleFragment can only be used in scheduleScreen") }
@@ -39,6 +39,9 @@ class DayScheduleFragment : AppFragment()
 
 			override fun onEndHourChange(scheduleHour: ScheduleHour) = showEndHourPicker(scheduleHour)
 
+			override fun onSubjectChange(scheduleHour: ScheduleHour, subject: String?) =
+					this@DayScheduleFragment.onSubjectChange(scheduleHour, subject)
+
 			override fun onTeacherChange(scheduleHour: ScheduleHour, teacherId: String) =
 					this@DayScheduleFragment.onTeacherChange(scheduleHour, teacherId)
 
@@ -46,7 +49,7 @@ class DayScheduleFragment : AppFragment()
 		})
 	}
 
-	private val dayOfWeek by lazy {arguments?.getSerializable(KEY_DAY_OF_WEEK) as? DayOfWeek ?: throw Exception("dayOfWeek not passed to fragment") }
+	private val dayOfWeek by lazy { arguments?.getSerializable(KEY_DAY_OF_WEEK) as? DayOfWeek ?: throw Exception("dayOfWeek not passed to fragment") }
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
 	{
@@ -62,7 +65,7 @@ class DayScheduleFragment : AppFragment()
 
 	fun addScheduleHour()
 	{
-		val position = daySchedule.addScheduleHour(ScheduleHour.Time.zero, ScheduleHour.Time.zero)
+		val position = daySchedule.addScheduleHour(Time.zero, Time.zero)
 		if(position == null)
 		{
 			Snackbar.make(scheduleScreen.coordinator ?: return, R.string.message_schedule_full, Snackbar.LENGTH_SHORT).show()
@@ -83,7 +86,7 @@ class DayScheduleFragment : AppFragment()
 
 	private fun onStartHourChange(scheduleHour: ScheduleHour, hour: Int, minute: Int)
 	{
-		scheduleHour.start = ScheduleHour.Time.createTime(hour, minute) ?: throw Exception("Invalid time")
+		scheduleHour.start = Time.createTime(hour, minute) ?: throw Exception("Invalid time")
 		scheduleHour.end = scheduleHour.start + defaultScheduleHourDuration ?: scheduleHour.end
 		daySchedule.saveSchedule(requireContext())
 		sortScheduleHours()
@@ -99,10 +102,16 @@ class DayScheduleFragment : AppFragment()
 
 	private fun onEndHourChange(scheduleHour: ScheduleHour, hour: Int, minute: Int)
 	{
-		scheduleHour.end = ScheduleHour.Time.createTime(hour, minute) ?: throw Exception("Invalid time")
+		scheduleHour.end = Time.createTime(hour, minute) ?: throw Exception("Invalid time")
 		daySchedule.saveSchedule(requireContext())
 		sortScheduleHours()
 		adapter.notifyItemRangeChanged(0, daySchedule.size)
+	}
+
+	private fun onSubjectChange(scheduleHour: ScheduleHour, subject: String?)
+	{
+		scheduleHour.subject = subject
+		daySchedule.saveSchedule(requireContext())
 	}
 
 	private fun onTeacherChange(scheduleHour: ScheduleHour, teacherId: String)

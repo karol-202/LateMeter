@@ -3,11 +3,10 @@ package pl.karol202.latemeter.schedule
 import android.content.Context
 import androidx.preference.PreferenceManager
 import com.google.gson.Gson
-import pl.karol202.latemeter.schedule.ScheduleHour.Time
 
 class DaySchedule(
 		context: Context,
-		val dayOfWeek: DayOfWeek
+		private val dayOfWeek: DayOfWeek
 ) {
 	companion object
 	{
@@ -39,7 +38,7 @@ class DaySchedule(
 	fun addScheduleHour(start: Time, end: Time): Int?
 	{
 		if(size >= MAX_LENGTH_PER_DAY) return null
-		scheduleHours.add(ScheduleHour(this, start, end, null))
+		scheduleHours.add(ScheduleHour(this, start, end, null, null))
 		checkSchedule()
 		return size - 1
 	}
