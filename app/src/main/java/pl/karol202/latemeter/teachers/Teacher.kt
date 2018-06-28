@@ -20,6 +20,9 @@ class Teacher(
 
 	private val tardies = mutableListOf<Tardy>()
 
+	@Transient var sumOfTardies = calculateSumOfTardies()
+	@Transient var averageOfTardies = calculateAverageOfTardies()
+
 	val tardiesAmount: Int
 		get() = tardies.size
 
@@ -28,12 +31,19 @@ class Teacher(
 	fun addTardy(tardy: Tardy)
 	{
 		tardies.add(tardy)
+		updateTardiesInfo()
 	}
 
 	fun findTardy(date: Date, scheduleHourStart: Time) =
 			tardies.find { it.date == date && it.expectedTime == scheduleHourStart }
 
-	fun getSumOfTardies() = tardies.fold(TimeSpan.zero) { sum, tardy -> sum + tardy.duration }
+	private fun updateTardiesInfo()
+	{
+		sumOfTardies = calculateSumOfTardies()
+		averageOfTardies = calculateAverageOfTardies()
+	}
 
-	fun getAverageOfTardies() = getSumOfTardies() / tardiesAmount.takeUnless { it == 0 }
+	private fun calculateSumOfTardies() = tardies.fold(TimeSpan.zero) { sum, tardy -> sum + tardy.duration }
+
+	private fun calculateAverageOfTardies() = sumOfTardies / tardiesAmount.takeUnless { it == 0 }
 }

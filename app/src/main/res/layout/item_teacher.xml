@@ -24,4 +24,17 @@
 		android:layout_marginStart="20dp"
 		android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
 		android:layout_gravity="center_vertical"/>
+	<Space
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_weight="1"/>
+	<TextView
+		android:text="@string/unknown"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:id="@+id/text_teacher_average_lateness"
+		android:layout_gravity="center_vertical"
+		android:layout_marginEnd="16dp"
+		android:textColor="@color/colorSecondary"
+		android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"/>
 </LinearLayout>

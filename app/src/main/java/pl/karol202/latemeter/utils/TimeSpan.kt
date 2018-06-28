@@ -28,6 +28,8 @@ class TimeSpan private constructor(
 
 		private fun createTimeSpan(hour: Int, minute: Int, second: Int) =
 				if(minute in 0..59 && second in 0..59) TimeSpan(hour, minute, second) else null
+
+		fun formatNullTimeSpan(context: Context): String = context.getString(R.string.timespan_null)
 	}
 
 	init

@@ -61,6 +61,8 @@
 
 	<string name="teachers_sorting_by_name_ascending">Od A do Z</string>
 	<string name="teachers_sorting_by_name_descending">Od Z do A</string>
+	<string name="teachers_sorting_by_average_lateness_ascending">Według średniego spóźnienia rosnąco</string>
+	<string name="teachers_sorting_by_average_lateness_descending">Według średniego spóźnienia malejąco</string>
 
 	<string name="teacher_stats_accumulated_lateness">Suma spóźnień</string>
 	<string name="teacher_stats_average_lateness">Średni czas spóźnienia</string>

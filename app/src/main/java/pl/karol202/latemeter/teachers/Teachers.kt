@@ -4,6 +4,7 @@ import android.content.Context
 import android.preference.PreferenceManager
 import com.google.gson.Gson
 import pl.karol202.latemeter.R
+import pl.karol202.latemeter.utils.TimeSpan
 import java.util.*
 
 class Teachers private constructor(context: Context)
@@ -13,7 +14,13 @@ class Teachers private constructor(context: Context)
 	enum class Sorting(val text: Int, val comparator: (Teacher, Teacher) -> Int)
 	{
 		BY_NAME_ASCENDING(R.string.teachers_sorting_by_name_ascending, { a, b -> a.name.compareTo(b.name, true) }),
-		BY_NAME_DESCENDING(R.string.teachers_sorting_by_name_descending, { a, b -> b.name.compareTo(a.name, true) });
+		BY_NAME_DESCENDING(R.string.teachers_sorting_by_name_descending, { a, b -> b.name.compareTo(a.name, true) }),
+		BY_AVERAGE_LATENESS_ASCENDING(R.string.teachers_sorting_by_average_lateness_ascending, { a, b ->
+			(a.averageOfTardies ?: TimeSpan.zero).compareTo(b.averageOfTardies ?: TimeSpan.zero)
+		}),
+		BY_AVERAGE_LATENESS_DESCENDING(R.string.teachers_sorting_by_average_lateness_descending, { a, b ->
+			(b.averageOfTardies ?: TimeSpan.zero).compareTo(a.averageOfTardies ?: TimeSpan.zero)
+		})
 	}
 
 	companion object
