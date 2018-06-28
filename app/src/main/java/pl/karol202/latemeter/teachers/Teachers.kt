@@ -50,9 +50,11 @@ class Teachers private constructor(context: Context)
 
 	operator fun contains(id: String) = id in teachers
 
-	fun addTeacher(teacher: Teacher)
+	fun addTeacher(teacher: Teacher): String
 	{
-		teachers[Teacher.createUniqueID()] = teacher
+		val id = Teacher.createUniqueID()
+		teachers[id] = teacher
+		return id
 	}
 
 	fun removeTeacher(id: String)

@@ -3,6 +3,7 @@ package pl.karol202.latemeter.schedule
 import pl.karol202.latemeter.R
 import pl.karol202.latemeter.teachers.Teachers
 import pl.karol202.latemeter.utils.Time
+import java.io.Serializable
 
 class ScheduleHour(
 		@Transient var daySchedule: DaySchedule,
@@ -11,7 +12,7 @@ class ScheduleHour(
 		_end: Time,
 		_subject: String?,
 		_teacher: String?
-) {
+) : Serializable {
 	enum class Error(val message: Int)
 	{
 		NEGATIVE_TIMESPAN(R.string.error_schedule_hour_negative_timespan),
@@ -84,24 +85,20 @@ class ScheduleHour(
 
 		other as ScheduleHour
 
-		if(daySchedule != other.daySchedule) return false
-		if(subject != other.subject) return false
-		if(teacher != other.teacher) return false
 		if(start != other.start) return false
 		if(end != other.end) return false
-		if(error != other.error) return false
+		if(subject != other.subject) return false
+		if(teacher != other.teacher) return false
 
 		return true
 	}
 
 	override fun hashCode(): Int
 	{
-		var result = daySchedule.hashCode()
+		var result = start.hashCode()
+		result = 31 * result + end.hashCode()
 		result = 31 * result + (subject?.hashCode() ?: 0)
 		result = 31 * result + (teacher?.hashCode() ?: 0)
-		result = 31 * result + start.hashCode()
-		result = 31 * result + end.hashCode()
-		result = 31 * result + (error?.hashCode() ?: 0)
 		return result
 	}
 }

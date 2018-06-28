@@ -33,6 +33,8 @@ class DayScheduleAdapter(
 
 		fun onTeacherChange(scheduleHour: ScheduleHour, teacherId: String): Boolean
 
+		fun onTeacherCreate(scheduleHour: ScheduleHour)
+
 		fun onRemove(scheduleHour: ScheduleHour)
 	}
 
@@ -79,7 +81,11 @@ class DayScheduleAdapter(
 				override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long)
 				{
 					scheduleHour?.let { hour ->
-						val update = listener.onTeacherChange(hour, teachersAdapter.getIdOfTeacherAtPosition(position) ?: return)
+						val teacher = teachersAdapter.getIdOfTeacherAtPosition(position)
+						val update = teacher?.let { listener.onTeacherChange(hour, it) } ?: run {
+							listener.onTeacherCreate(hour)
+							false
+						}
 						if(update) updateError(hour)
 					}
 				}

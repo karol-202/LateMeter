@@ -27,6 +27,7 @@
 	<string name="hint_teacher_name">Imię i nazwisko</string>
 	<string name="hint_schedule_hour_name">Przedmiot</string>
 	<string name="hint_select_teacher">Wybierz nauczyciela</string>
+	<string name="hint_create_teacher">Dodaj nauczyciela</string>
 
 	<string name="text_teacher_color">Wybierz kolor</string>
 	<string name="text_now">Teraz: %s\u0020\u0020\u0020%s - %s</string>
@@ -69,6 +70,7 @@
 
 	<string name="timespan_format_short">%02d:%02d</string>
 	<string name="timespan_format_long">%02d:%02d:%02d</string>
+	<string name="timespan_null">-</string>
 	<string name="hour_separator">-</string>
 	<string name="unknown">Nieznany</string>
 	<string name="hour_unknown">00:00</string>

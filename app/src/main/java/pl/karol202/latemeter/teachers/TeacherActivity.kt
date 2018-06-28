@@ -29,6 +29,7 @@ class TeacherActivity : AppCompatActivity()
 	{
 		const val KEY_ID = "id"
 		const val KEY_TEACHER = "teacher"
+		const val KEY_SCHEDULE_HOUR = "schedule_hour"//When teacher is created by selecting "Create new teacher" item from schedule hour's teacher menu
 
 		const val RESULT_CANCEL = 0
 		const val RESULT_OK = 1
@@ -49,6 +50,7 @@ class TeacherActivity : AppCompatActivity()
 	private val teacher: Teacher by lazy {
 		(intent.getSerializableExtra(KEY_TEACHER) as? Teacher) ?: Teacher(getString(R.string.default_teacher_name), ResourcesCompat.getColor(resources, R.color.teacher_default_color, null))
 	}
+	private val scheduleHour by lazy { intent.getSerializableExtra(KEY_SCHEDULE_HOUR) ?: null }
 
 	private var newColor: Int? = null
 
@@ -97,6 +99,14 @@ class TeacherActivity : AppCompatActivity()
 		else -> super.onOptionsItemSelected(item)
 	}
 
+	private fun checkName(): Boolean
+	{
+		val valid = !editTextName.text.isNullOrBlank()
+		if(!valid) editTextLayoutName.error = getString(R.string.error_teacher_name_blank)
+		else editTextLayoutName.isErrorEnabled = false
+		return valid
+	}
+
 	@SuppressLint("InflateParams")
 	private fun editTeacherColor()
 	{
@@ -128,19 +138,7 @@ class TeacherActivity : AppCompatActivity()
 		teacher.name = editTextName.text.toString()
 		newColor?.let { teacher.color = it }
 
-		val intent = Intent()
-		intent.putExtra(KEY_ID, id)
-		intent.putExtra(KEY_TEACHER, teacher)
-		setResult(RESULT_OK, intent)
-		finish()
-	}
-
-	private fun checkName(): Boolean
-	{
-		val valid = !editTextName.text.isNullOrBlank()
-		if(!valid) editTextLayoutName.error = getString(R.string.error_teacher_name_blank)
-		else editTextLayoutName.isErrorEnabled = false
-		return valid
+		finishWithResult(RESULT_OK)
 	}
 
 	private fun showTeacherRemovalDialog()
@@ -154,12 +152,15 @@ class TeacherActivity : AppCompatActivity()
 		dialog = builder.show()
 	}
 
-	private fun removeTeacher()
+	private fun removeTeacher() = finishWithResult(RESULT_REMOVE)
+
+	private fun finishWithResult(result: Int)
 	{
 		val intent = Intent()
 		intent.putExtra(KEY_ID, id)
 		intent.putExtra(KEY_TEACHER, teacher)
-		setResult(RESULT_REMOVE, intent)
+		intent.putExtra(KEY_SCHEDULE_HOUR, scheduleHour)
+		setResult(result, intent)
 		finish()
 	}
 }

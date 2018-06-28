@@ -4,6 +4,7 @@ import pl.karol202.latemeter.lateness.Tardy
 import pl.karol202.latemeter.utils.Date
 import pl.karol202.latemeter.utils.Time
 import pl.karol202.latemeter.utils.TimeSpan
+import pl.karol202.latemeter.utils.div
 import java.io.Serializable
 import java.util.*
 
@@ -34,5 +35,5 @@ class Teacher(
 
 	fun getSumOfTardies() = tardies.fold(TimeSpan.zero) { sum, tardy -> sum + tardy.duration }
 
-	fun getAverageOfTardies() = getSumOfTardies() / tardiesAmount
+	fun getAverageOfTardies() = getSumOfTardies() / tardiesAmount.takeUnless { it == 0 }
 }

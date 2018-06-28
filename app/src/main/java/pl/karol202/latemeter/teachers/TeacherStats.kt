@@ -9,6 +9,6 @@ enum class TeacherStats(val title: Int, val valueSupplier: (Context, Teacher) ->
 		teacher.getSumOfTardies().format(context, true)
 	}),
 	AVERAGE_LATENESS(R.string.teacher_stats_average_lateness, { context, teacher ->
-		teacher.getAverageOfTardies().format(context, true)
+		teacher.getAverageOfTardies()?.format(context, true) ?: context.getString(R.string.timespan_null)
 	})
 }

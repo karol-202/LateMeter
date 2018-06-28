@@ -1,6 +1,7 @@
 package pl.karol202.latemeter.schedule
 
 import android.app.TimePickerDialog
+import android.content.Intent
 import android.os.Bundle
 import android.text.format.DateFormat
 import android.view.LayoutInflater
@@ -13,6 +14,8 @@ import com.google.android.material.snackbar.Snackbar
 import pl.karol202.latemeter.R
 import pl.karol202.latemeter.main.AppFragment
 import pl.karol202.latemeter.settings.Settings
+import pl.karol202.latemeter.teachers.Teacher
+import pl.karol202.latemeter.teachers.TeacherActivity
 import pl.karol202.latemeter.utils.ItemDivider
 import pl.karol202.latemeter.utils.Time
 import pl.karol202.latemeter.utils.TimeSpan
@@ -23,6 +26,8 @@ class DayScheduleFragment : AppFragment()
 	companion object
 	{
 		const val KEY_DAY_OF_WEEK = "dayOfWeek"
+
+		const val REQUEST_CREATE_TEACHER_FOR_SCHEDULE_HOUR = 1
 	}
 
 	private val teachers by lazy { requireMainActivity().teachers }
@@ -47,6 +52,9 @@ class DayScheduleFragment : AppFragment()
 			override fun onTeacherChange(scheduleHour: ScheduleHour, teacherId: String) =
 					this@DayScheduleFragment.onTeacherChange(scheduleHour, teacherId)
 
+			override fun onTeacherCreate(scheduleHour: ScheduleHour) =
+					this@DayScheduleFragment.onTeacherCreate(scheduleHour)
+
 			override fun onRemove(scheduleHour: ScheduleHour) = showRemovalDialog(scheduleHour)
 		})
 	}
@@ -63,6 +71,20 @@ class DayScheduleFragment : AppFragment()
 		recyclerScheduleDay.addItemDecoration(ItemDivider(requireContext()))
 
 		return view
+	}
+
+	override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
+	{
+		if(requestCode != REQUEST_CREATE_TEACHER_FOR_SCHEDULE_HOUR || resultCode != TeacherActivity.RESULT_OK) return
+		val teacher = data?.getSerializableExtra(TeacherActivity.KEY_TEACHER) as? Teacher ?: return
+		val teacherId = teachers.addTeacher(teacher)
+		teachers.saveTeachers(requireContext())
+
+		val serializedScheduleHour = data.getSerializableExtra(TeacherActivity.KEY_SCHEDULE_HOUR) as? ScheduleHour ?: return
+		val scheduleHour = daySchedule.findSameScheduleHour(serializedScheduleHour) ?: return
+		scheduleHour.teacher = teacherId
+		daySchedule.saveSchedule(requireContext())
+		adapter.notifyItemChanged(daySchedule.getIndexOf(scheduleHour))
 	}
 
 	fun addScheduleHour()
@@ -124,6 +146,13 @@ class DayScheduleFragment : AppFragment()
 		scheduleHour.teacher = teacherId
 		daySchedule.saveSchedule(requireContext())
 		return previousError != scheduleHour.error
+	}
+
+	private fun onTeacherCreate(scheduleHour: ScheduleHour)
+	{
+		val intent = Intent(requireContext(), TeacherActivity::class.java)
+		intent.putExtra(TeacherActivity.KEY_SCHEDULE_HOUR, scheduleHour)
+		startActivityForResult(intent, REQUEST_CREATE_TEACHER_FOR_SCHEDULE_HOUR)
 	}
 
 	private fun showRemovalDialog(scheduleHour: ScheduleHour)

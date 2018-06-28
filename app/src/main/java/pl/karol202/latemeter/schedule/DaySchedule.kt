@@ -101,6 +101,8 @@ class DaySchedule(
 		return null
 	}
 
+	fun findSameScheduleHour(scheduleHour: ScheduleHour) = scheduleHours.find { it == scheduleHour }
+
 	private fun loadSchedule(context: Context, teachers: Teachers)
 	{
 		scheduleHours.clear()
