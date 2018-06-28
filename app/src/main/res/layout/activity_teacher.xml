@@ -23,7 +23,8 @@
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
 			android:id="@+id/layout_activity_teachers"
-			android:orientation="vertical">
+			android:orientation="vertical"
+			android:focusableInTouchMode="true">
 
 			<LinearLayout
 				android:layout_width="match_parent"
@@ -32,7 +33,7 @@
 				android:clickable="true"
 				android:background="?android:attr/selectableItemBackground"
 				android:orientation="horizontal"
-				android:id="@+id/item_teacher_name">
+				android:id="@+id/panel_teacher_name">
 
 				<androidx.appcompat.widget.AppCompatImageView
 					android:layout_width="24dp"
@@ -69,7 +70,7 @@
 				android:clickable="true"
 				android:background="?android:attr/selectableItemBackground"
 				android:orientation="horizontal"
-				android:id="@+id/item_teacher_color">
+				android:id="@+id/panel_teacher_color">
 
 				<ImageView
 					android:layout_width="24dp"
@@ -89,7 +90,15 @@
 					android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"/>
 			</LinearLayout>
 
+			<androidx.recyclerview.widget.RecyclerView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:id="@+id/recycler_teacher_stats"
+				android:layout_marginStart="4dp"
+				android:layout_marginEnd="4dp"/>
+
 		</LinearLayout>
+
 	</androidx.core.widget.NestedScrollView>
 
 	<com.google.android.material.floatingactionbutton.FloatingActionButton

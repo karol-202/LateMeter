@@ -16,6 +16,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -34,11 +35,14 @@ class TeacherActivity : AppCompatActivity()
 		const val RESULT_REMOVE = 2
 	}
 
+	private val adapter by lazy { TeacherStatsAdapter(this, teacher) }
+
 	private val toolbar by lazy { findView<Toolbar>(R.id.toolbar) }
 	private val editTextLayoutName by lazy { findView<TextInputLayout>(R.id.editTextLayout_teacher_name) }
 	private val editTextName by lazy { findView<TextInputEditText>(R.id.editText_teacher_name) }
-	private val itemTeacherColor by lazy { findView<View>(R.id.item_teacher_color) }
+	private val panelTeacherColor by lazy { findView<View>(R.id.panel_teacher_color) }
 	private val imageTeacherColor by lazy { findView<ImageView>(R.id.image_teacher_color) }
+	private val recyclerStats by lazy { findView<RecyclerView>(R.id.recycler_teacher_stats) }
 	private val buttonDone by lazy { findView<FloatingActionButton>(R.id.button_teacher_done) }
 
 	private val id: String? by lazy { intent.getStringExtra(KEY_ID) ?: null }
@@ -69,9 +73,12 @@ class TeacherActivity : AppCompatActivity()
 			override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { }
 		})
 
-		itemTeacherColor.setOnClickListener { editTeacherColor() }
+		panelTeacherColor.setOnClickListener { editTeacherColor() }
 
 		imageTeacherColor.setColorFilter(teacher.color)
+
+		recyclerStats.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+		recyclerStats.adapter = adapter
 
 		buttonDone.setOnClickListener { applyTeacher() }
 

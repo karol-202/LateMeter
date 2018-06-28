@@ -4,19 +4,7 @@ import android.content.Context
 import android.preference.PreferenceManager
 import com.google.gson.Gson
 import pl.karol202.latemeter.R
-import java.io.Serializable
 import java.util.*
-
-data class Teacher(
-		var name: String,
-		var color: Int
-) : Serializable
-{
-	companion object
-	{
-		fun createUniqueID() = UUID.randomUUID().toString()
-	}
-}
 
 class Teachers private constructor(context: Context)
 {
@@ -59,6 +47,8 @@ class Teachers private constructor(context: Context)
 	{
 		teachers[id] = teacher
 	}
+
+	operator fun contains(id: String) = id in teachers
 
 	fun addTeacher(teacher: Teacher)
 	{

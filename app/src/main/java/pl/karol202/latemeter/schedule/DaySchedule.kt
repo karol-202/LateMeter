@@ -3,9 +3,12 @@ package pl.karol202.latemeter.schedule
 import android.content.Context
 import androidx.preference.PreferenceManager
 import com.google.gson.Gson
+import pl.karol202.latemeter.teachers.Teachers
+import pl.karol202.latemeter.utils.Time
 
 class DaySchedule(
 		context: Context,
+		private val teachers: Teachers,
 		private val dayOfWeek: DayOfWeek
 ) {
 	companion object
@@ -23,7 +26,7 @@ class DaySchedule(
 
 	init
 	{
-		loadSchedule(context)
+		loadSchedule(context, teachers)
 	}
 
 	operator fun get(index: Int) = scheduleHours[index]
@@ -38,7 +41,7 @@ class DaySchedule(
 	fun addScheduleHour(start: Time, end: Time): Int?
 	{
 		if(size >= MAX_LENGTH_PER_DAY) return null
-		scheduleHours.add(ScheduleHour(this, start, end, null, null))
+		scheduleHours.add(ScheduleHour(this, teachers, start, end, null, null))
 		checkSchedule()
 		return size - 1
 	}
@@ -88,7 +91,17 @@ class DaySchedule(
 		scheduleHours.forEach { it.checkError() }
 	}
 
-	fun loadSchedule(context: Context)
+	fun getCurrentScheduleHour(time: Time): ScheduleHour?
+	{
+		for(scheduleHour in scheduleHours)
+		{
+			if(scheduleHour.error != null) continue
+			if(time in scheduleHour.start..scheduleHour.end) return scheduleHour
+		}
+		return null
+	}
+
+	private fun loadSchedule(context: Context, teachers: Teachers)
 	{
 		scheduleHours.clear()
 
@@ -100,6 +113,7 @@ class DaySchedule(
 			val prefName = String.format(KEY_SCHEDULE_HOUR_N, dayOfWeek.name, i)
 			val scheduleHour = gson.fromJson(prefs.getString(prefName, ""), ScheduleHour::class.java)
 			scheduleHour.daySchedule = this
+			scheduleHour.teachers = teachers
 			scheduleHours.add(scheduleHour)
 		}
 		checkSchedule()

@@ -1,18 +1,23 @@
 package pl.karol202.latemeter.schedule
 
 import pl.karol202.latemeter.R
+import pl.karol202.latemeter.teachers.Teachers
+import pl.karol202.latemeter.utils.Time
 
 class ScheduleHour(
 		@Transient var daySchedule: DaySchedule,
+		@Transient var teachers: Teachers,
 		_start: Time,
 		_end: Time,
-		var subject: String?,
-		var teacher: String?
+		_subject: String?,
+		_teacher: String?
 ) {
 	enum class Error(val message: Int)
 	{
 		NEGATIVE_TIMESPAN(R.string.error_schedule_hour_negative_timespan),
-		OVERLAP(R.string.error_schedule_hour_overlap)
+		OVERLAP(R.string.error_schedule_hour_overlap),
+		SUBJECT_BLANK(R.string.error_schedule_hour_subject_blank),
+		TEACHER_BLANK(R.string.error_schedule_hour_teacher_blank)
 	}
 
 	var start = _start
@@ -29,6 +34,20 @@ class ScheduleHour(
 			daySchedule.checkSchedule()
 		}
 
+	var subject = _subject
+		set(value)
+		{
+			field = value
+			daySchedule.checkSchedule()
+		}
+
+	var teacher = _teacher
+		set(value)
+		{
+			field = value
+			daySchedule.checkSchedule()
+		}
+
 	@Transient
 	var error: Error? = null
 		private set
@@ -38,11 +57,14 @@ class ScheduleHour(
 		error = when
 		{
 			start >= end -> Error.NEGATIVE_TIMESPAN
-			else -> checkOverlapping()
+			checkOverlapping() -> Error.OVERLAP
+			subject.isNullOrBlank() -> Error.SUBJECT_BLANK
+			teacher?.let { it !in teachers } ?: true -> Error.TEACHER_BLANK
+			else -> null
 		}
 	}
 
-	private fun checkOverlapping(): Error?
+	private fun checkOverlapping(): Boolean
 	{
 		var overlaps = false
 		for(i in 0 until daySchedule.size)
@@ -50,7 +72,7 @@ class ScheduleHour(
 			val comparedHour = daySchedule[i]
 			if(comparedHour != this && overlapsWith(comparedHour)) overlaps = true
 		}
-		return if(overlaps) Error.OVERLAP else null
+		return overlaps
 	}
 
 	private fun overlapsWith(other: ScheduleHour) = start in other.start..other.end

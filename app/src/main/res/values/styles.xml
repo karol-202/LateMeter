@@ -12,4 +12,12 @@
 	<style name="AppTheme.ImageButton.Borderless" parent="Widget.AppCompat.ImageButton">
 		<item name="android:background">?android:attr/selectableItemBackgroundBorderless</item>
 	</style>
+
+	<style name="AppTheme.TextAppearance.Lateness" parent="TextAppearance.MaterialComponents.Headline2">
+		<item name="android:textColor">?attr/colorAccent</item>
+	</style>
+	
+	<style name="AppTheme.TextAppearance.TeacherStats.Value" parent="TextAppearance.MaterialComponents.Headline4">
+		<item name="android:textColor">@color/text_primary</item>
+	</style>
 </resources>

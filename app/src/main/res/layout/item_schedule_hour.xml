@@ -77,6 +77,7 @@
 			android:layout_gravity="center_vertical"
 			android:alpha="0.84"/>
 	</LinearLayout>
+
 	<com.google.android.material.textfield.TextInputLayout
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
@@ -89,8 +90,11 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:hint="@string/hint_schedule_hour_name"
-			android:id="@+id/editText_schedule_hour_subject"/>
+			android:id="@+id/editText_schedule_hour_subject"
+			android:inputType="text"
+			android:maxLines="1"/>
 	</com.google.android.material.textfield.TextInputLayout>
+
 	<Spinner
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"

@@ -1,8 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:layout_width="match_parent"
-	android:layout_height="match_parent">
+	android:layout_height="match_parent"
+	android:orientation="vertical">
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+	<TextView
+		android:text="@string/text_now"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/text_now"
+		android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+		android:layout_marginStart="16dp"
+		android:layout_marginEnd="16dp"
+		android:layout_marginTop="16dp"/>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		android:layout_marginStart="16dp"
+		android:layout_marginEnd="16dp"
+		android:layout_marginTop="8dp"
+		android:id="@+id/panel_lateness_teacher">
+
+		<ImageView
+			android:layout_width="36dp"
+			android:layout_height="36dp"
+			app:srcCompat="@drawable/teacher_avatar"
+			android:id="@+id/image_now_teacher_color"/>
+
+		<TextView
+			android:text="@string/unknown"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:id="@+id/text_now_teacher_name"
+			android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+			android:layout_marginStart="16dp"
+			android:layout_gravity="center_vertical"/>
+
+	</LinearLayout>
+
+	<TextView
+		android:text="@string/hour_unknown"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/text_lateness"
+		android:textAppearance="@style/AppTheme.TextAppearance.Lateness"
+		android:layout_marginStart="16dp"
+		android:layout_marginEnd="16dp"
+		android:gravity="center_horizontal"
+		android:layout_marginTop="8dp"/>
+	<Button
+		android:text="@string/button_teacher_arrive"
+		android:layout_width="match_parent"
+		android:id="@+id/button_teacher_arrive"
+		android:layout_marginStart="16dp"
+		android:layout_marginEnd="16dp"
+		android:layout_marginTop="16dp"
+		style="@style/Widget.AppCompat.Button.Colored"
+		android:layout_height="54dp"/>
+	<View
+		android:id="@+id/divider_lateness"
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:background="@color/divider_strong"
+		android:layout_marginStart="16dp"
+		android:layout_marginEnd="16dp"
+		android:layout_marginTop="8dp"/>
+
+</LinearLayout>

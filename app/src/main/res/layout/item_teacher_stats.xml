@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	style="@style/Widget.MaterialComponents.CardView"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:layout_marginLeft="@dimen/mtrl_card_spacing"
+	android:layout_marginTop="@dimen/mtrl_card_spacing"
+	android:layout_marginRight="@dimen/mtrl_card_spacing"
+	app:strokeWidth="1px"
+	app:strokeColor="@color/divider_strong">
+
+	<LinearLayout
+		android:orientation="vertical"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:background="?android:attr/selectableItemBackground"
+		android:focusable="true"
+		android:clickable="true">
+
+		<TextView
+			android:text="@string/unknown"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:id="@+id/text_teacher_stat_title"
+			android:layout_marginStart="16dp"
+			android:layout_marginTop="16dp"
+			android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+			android:layout_marginEnd="16dp"/>
+		<TextView
+			android:text="@string/unknown"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:id="@+id/text_teacher_stat_value"
+			android:layout_marginStart="16dp"
+			android:layout_marginTop="16dp"
+			android:textAppearance="@style/AppTheme.TextAppearance.TeacherStats.Value"
+			android:layout_marginBottom="16dp"
+			android:layout_marginEnd="16dp"/>
+	</LinearLayout>
+</com.google.android.material.card.MaterialCardView>

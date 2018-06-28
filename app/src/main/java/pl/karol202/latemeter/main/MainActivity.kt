@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity()
 	}
 
 	val teachers by lazy { Teachers.loadTeachers(this) }
-	val schedule by lazy { Schedule.loadSchedule(this) }
+	val schedule by lazy { Schedule.loadSchedule(this, teachers) }
 
 	private val toolbar by lazy { findView<Toolbar>(R.id.toolbar) }
 	val tabLayout by lazy { findView<TabLayout>(R.id.tabLayout_main) }

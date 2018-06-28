@@ -31,9 +31,9 @@ class ScheduleHourTeacherAdapter private constructor(
 
 	private val ids = teachersWithIds.map { it?.id }
 
-	fun getIndexOfTeacherOfId(id: String?) = ids.indexOf(id)
+	fun getIndexOfTeacherOfId(id: String?) = ids.indexOf(id.takeIf { ids.contains(it) })
 
-	fun getIdOfTeacherByPosition(index: Int) = ids[index]
+	fun getIdOfTeacherAtPosition(index: Int) = ids[index]
 
 	override fun getView(position: Int, convertView: View?, parent: ViewGroup?) =
 			getView(position, false, convertView, parent)

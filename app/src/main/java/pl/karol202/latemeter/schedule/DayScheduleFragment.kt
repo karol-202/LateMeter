@@ -14,6 +14,8 @@ import pl.karol202.latemeter.R
 import pl.karol202.latemeter.main.AppFragment
 import pl.karol202.latemeter.settings.Settings
 import pl.karol202.latemeter.utils.ItemDivider
+import pl.karol202.latemeter.utils.Time
+import pl.karol202.latemeter.utils.TimeSpan
 import pl.karol202.latemeter.utils.findView
 
 class DayScheduleFragment : AppFragment()
@@ -27,8 +29,8 @@ class DayScheduleFragment : AppFragment()
 	private val daySchedule by lazy { requireMainActivity().schedule.getDaySchedule(dayOfWeek) }
 	private val is24h by lazy { DateFormat.is24HourFormat(requireContext()) }
 	private val defaultScheduleHourDuration by lazy {
-		Time.fromMinutes(Settings.getSetting(requireContext(), Settings.DEFAULT_SCHEDULE_HOUR_DURATION)) ?:
-		Time.zero }
+		TimeSpan.fromMinutes(Settings.getSetting(requireContext(), Settings.DEFAULT_SCHEDULE_HOUR_DURATION)) ?:
+		TimeSpan.zero }
 
 	private val scheduleScreen by lazy { parentFragment as? ScheduleScreen ?:
 										 throw Exception("DayScheduleFragment can only be used in scheduleScreen") }
@@ -86,7 +88,7 @@ class DayScheduleFragment : AppFragment()
 
 	private fun onStartHourChange(scheduleHour: ScheduleHour, hour: Int, minute: Int)
 	{
-		scheduleHour.start = Time.createTime(hour, minute) ?: throw Exception("Invalid time")
+		scheduleHour.start = Time.createTime(hour, minute, 0) ?: throw Exception("Invalid time")
 		scheduleHour.end = scheduleHour.start + defaultScheduleHourDuration ?: scheduleHour.end
 		daySchedule.saveSchedule(requireContext())
 		sortScheduleHours()
@@ -102,22 +104,26 @@ class DayScheduleFragment : AppFragment()
 
 	private fun onEndHourChange(scheduleHour: ScheduleHour, hour: Int, minute: Int)
 	{
-		scheduleHour.end = Time.createTime(hour, minute) ?: throw Exception("Invalid time")
+		scheduleHour.end = Time.createTime(hour, minute, 0) ?: throw Exception("Invalid time")
 		daySchedule.saveSchedule(requireContext())
 		sortScheduleHours()
 		adapter.notifyItemRangeChanged(0, daySchedule.size)
 	}
 
-	private fun onSubjectChange(scheduleHour: ScheduleHour, subject: String?)
+	private fun onSubjectChange(scheduleHour: ScheduleHour, subject: String?): Boolean
 	{
+		val previousError = scheduleHour.error
 		scheduleHour.subject = subject
 		daySchedule.saveSchedule(requireContext())
+		return previousError != scheduleHour.error
 	}
 
-	private fun onTeacherChange(scheduleHour: ScheduleHour, teacherId: String)
+	private fun onTeacherChange(scheduleHour: ScheduleHour, teacherId: String): Boolean
 	{
+		val previousError = scheduleHour.error
 		scheduleHour.teacher = teacherId
 		daySchedule.saveSchedule(requireContext())
+		return previousError != scheduleHour.error
 	}
 
 	private fun showRemovalDialog(scheduleHour: ScheduleHour)
