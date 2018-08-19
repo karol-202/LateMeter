@@ -16,10 +16,7 @@ import pl.karol202.latemeter.main.AppFragment
 import pl.karol202.latemeter.settings.Settings
 import pl.karol202.latemeter.teachers.Teacher
 import pl.karol202.latemeter.teachers.TeacherActivity
-import pl.karol202.latemeter.utils.ItemDivider
-import pl.karol202.latemeter.utils.Time
-import pl.karol202.latemeter.utils.TimeSpan
-import pl.karol202.latemeter.utils.findView
+import pl.karol202.latemeter.utils.*
 
 class DayScheduleFragment : AppFragment()
 {
@@ -34,8 +31,8 @@ class DayScheduleFragment : AppFragment()
 	private val daySchedule by lazy { requireMainActivity().schedule.getDaySchedule(dayOfWeek) }
 	private val is24h by lazy { DateFormat.is24HourFormat(requireContext()) }
 	private val defaultScheduleHourDuration by lazy {
-		TimeSpan.fromMinutes(Settings.getSetting(requireContext(), Settings.DEFAULT_SCHEDULE_HOUR_DURATION)) ?:
-		TimeSpan.zero }
+		TimeSpan.fromMinutes(Settings.getSetting(requireContext(), Settings.DEFAULT_SCHEDULE_HOUR_DURATION))
+	}
 
 	private val scheduleScreen by lazy { parentFragment as? ScheduleScreen ?:
 										 throw Exception("DayScheduleFragment can only be used in scheduleScreen") }
@@ -76,11 +73,11 @@ class DayScheduleFragment : AppFragment()
 	override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
 	{
 		if(requestCode != REQUEST_CREATE_TEACHER_FOR_SCHEDULE_HOUR || resultCode != TeacherActivity.RESULT_OK) return
-		val teacher = data?.getSerializableExtra(TeacherActivity.KEY_TEACHER) as? Teacher ?: return
+		val teacher = data.getSerializable<Teacher>(TeacherActivity.KEY_TEACHER) ?: return
 		val teacherId = teachers.addTeacher(teacher)
 		teachers.saveTeachers(requireContext())
 
-		val serializedScheduleHour = data.getSerializableExtra(TeacherActivity.KEY_SCHEDULE_HOUR) as? ScheduleHour ?: return
+		val serializedScheduleHour = data.getSerializable<ScheduleHour>(TeacherActivity.KEY_SCHEDULE_HOUR) ?: return
 		val scheduleHour = daySchedule.findSameScheduleHour(serializedScheduleHour) ?: return
 		scheduleHour.teacher = teacherId
 		daySchedule.saveSchedule(requireContext())
@@ -92,7 +89,7 @@ class DayScheduleFragment : AppFragment()
 		val position = daySchedule.addScheduleHour(Time.zero, Time.zero)
 		if(position == null)
 		{
-			Snackbar.make(scheduleScreen.coordinator ?: return, R.string.message_schedule_full, Snackbar.LENGTH_SHORT).show()
+			scheduleScreen.showSnackbar(R.string.message_schedule_full, Snackbar.LENGTH_SHORT)
 			return
 		}
 		daySchedule.saveSchedule(requireContext())

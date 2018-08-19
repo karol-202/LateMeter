@@ -19,6 +19,7 @@ import pl.karol202.latemeter.teachers.Teachers
 import pl.karol202.latemeter.utils.Date
 import pl.karol202.latemeter.utils.Time
 import pl.karol202.latemeter.utils.findView
+import pl.karol202.latemeter.utils.string
 import java.util.*
 
 class LatenessScreen : Screen()
@@ -72,11 +73,11 @@ class LatenessScreen : Screen()
 	private val handler = Handler()
 
 	@get:JvmName("getV") private var view: View? = null
-	private val textNow by lazy { view.findView<TextView>(R.id.text_now) }
-	private val imageTeacherColor by lazy { view.findView<ImageView>(R.id.image_now_teacher_color) }
-	private val textTeacherName by lazy { view.findView<TextView>(R.id.text_now_teacher_name) }
-	private val textLateness by lazy { view.findView<TextView>(R.id.text_lateness) }
-	private val buttonTeacherArrive by lazy { view.findView<Button>(R.id.button_teacher_arrive) }
+	private val textNow by lazy { view!!.findView<TextView>(R.id.text_now) }
+	private val imageTeacherColor by lazy { view!!.findView<ImageView>(R.id.image_now_teacher_color) }
+	private val textTeacherName by lazy { view!!.findView<TextView>(R.id.text_now_teacher_name) }
+	private val textLateness by lazy { view!!.findView<TextView>(R.id.text_lateness) }
+	private val buttonTeacherArrive by lazy { view!!.findView<Button>(R.id.button_teacher_arrive) }
 
 	private val now by lazy { Now(teachers, schedule) }
 
@@ -107,7 +108,7 @@ class LatenessScreen : Screen()
 			val teacher = now.teacher!!
 			val currentTardy = teacher.findTardy(now.currentDate, hour.start)
 
-			textNow.text = context.getString(R.string.text_now, hour.subject, hour.start.format(context), hour.end.format(context))
+			textNow.text = context.string(R.string.text_now, hour.subject, hour.start.format(context), hour.end.format(context))
 
 			imageTeacherColor.visibility = View.VISIBLE
 			imageTeacherColor.setColorFilter(teacher.color)

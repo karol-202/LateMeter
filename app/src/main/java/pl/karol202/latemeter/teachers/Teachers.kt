@@ -1,10 +1,10 @@
 package pl.karol202.latemeter.teachers
 
 import android.content.Context
-import android.preference.PreferenceManager
 import com.google.gson.Gson
 import pl.karol202.latemeter.R
 import pl.karol202.latemeter.utils.TimeSpan
+import pl.karol202.latemeter.utils.preferences
 import java.util.*
 
 class Teachers private constructor(context: Context)
@@ -74,7 +74,7 @@ class Teachers private constructor(context: Context)
 		teachers.clear()
 
 		val gson = Gson()
-		val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+		val prefs = context.preferences()
 		val length = prefs.getInt(KEY_LENGTH, 0)
 		for(i in 0 until length)
 		{
@@ -87,7 +87,7 @@ class Teachers private constructor(context: Context)
 	fun saveTeachers(context: Context)
 	{
 		val gson = Gson()
-		val editor = PreferenceManager.getDefaultSharedPreferences(context).edit()
+		val editor = context.preferences().edit()
 		editor.putInt(KEY_LENGTH, size)
 		for(i in 0 until size)
 		{

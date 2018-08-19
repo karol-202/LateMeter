@@ -2,10 +2,15 @@ package pl.karol202.latemeter.settings
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.annotation.StringRes
 import androidx.preference.PreferenceManager
 import pl.karol202.latemeter.R
+import pl.karol202.latemeter.utils.string
 
-class Settings<T> private constructor(val keyRes: Int, val defaultValueRes: Int)
+class Settings<T> private constructor(
+		@StringRes val keyRes: Int,
+		@StringRes val defaultValueRes: Int
+)
 {
 	companion object
 	{
@@ -14,8 +19,8 @@ class Settings<T> private constructor(val keyRes: Int, val defaultValueRes: Int)
 		inline fun <reified T> getSetting(context: Context, setting: Settings<T>): T
 		{
 			val preferences = PreferenceManager.getDefaultSharedPreferences(context)
-			val key = context.getString(setting.keyRes)
-			val defaultValueString = context.getString(setting.defaultValueRes)
+			val key = context.string(setting.keyRes)
+			val defaultValueString = context.string(setting.defaultValueRes)
 			return when(T::class)
 			{
 				String::class -> getStringSetting(preferences, key, defaultValueString) as T

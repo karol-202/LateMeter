@@ -1,5 +1,6 @@
 package pl.karol202.latemeter.teachers
 
+import androidx.annotation.ColorInt
 import pl.karol202.latemeter.lateness.Tardy
 import pl.karol202.latemeter.utils.Date
 import pl.karol202.latemeter.utils.Time
@@ -10,7 +11,7 @@ import java.util.*
 
 class Teacher(
 		var name: String,
-		var color: Int
+		@ColorInt var color: Int
 ) : Serializable
 {
 	companion object
@@ -20,28 +21,22 @@ class Teacher(
 
 	private val tardies = mutableListOf<Tardy>()
 
-	@Transient var sumOfTardies = calculateSumOfTardies()
-	@Transient var averageOfTardies = calculateAverageOfTardies()
-
 	val tardiesAmount: Int
 		get() = tardies.size
-
-	operator fun get(index: Int) = tardies[index]
+	val sumOfTardies
+		get() = calculateSumOfTardies()
+	val averageOfTardies
+		get() = calculateAverageOfTardies()
 
 	fun addTardy(tardy: Tardy)
 	{
 		tardies.add(tardy)
-		updateTardiesInfo()
 	}
+
+	fun getTardy(index: Int) = tardies[index]
 
 	fun findTardy(date: Date, scheduleHourStart: Time) =
 			tardies.find { it.date == date && it.expectedTime == scheduleHourStart }
-
-	private fun updateTardiesInfo()
-	{
-		sumOfTardies = calculateSumOfTardies()
-		averageOfTardies = calculateAverageOfTardies()
-	}
 
 	private fun calculateSumOfTardies() = tardies.fold(TimeSpan.zero) { sum, tardy -> sum + tardy.duration }
 

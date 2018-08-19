@@ -8,10 +8,10 @@ import java.io.Serializable
 class ScheduleHour(
 		@Transient var daySchedule: DaySchedule,
 		@Transient var teachers: Teachers,
-		_start: Time,
-		_end: Time,
-		_subject: String?,
-		_teacher: String?
+		start: Time,
+		end: Time,
+		subject: String?,
+		teacher: String?
 ) : Serializable {
 	enum class Error(val message: Int)
 	{
@@ -21,28 +21,28 @@ class ScheduleHour(
 		TEACHER_BLANK(R.string.error_schedule_hour_teacher_blank)
 	}
 
-	var start = _start
+	var start = start
 		set(value)
 		{
 			field = value
 			daySchedule.checkSchedule()
 		}
 
-	var end = _end
+	var end = end
 		set(value)
 		{
 			field = value
 			daySchedule.checkSchedule()
 		}
 
-	var subject = _subject
+	var subject = subject
 		set(value)
 		{
 			field = value
 			daySchedule.checkSchedule()
 		}
 
-	var teacher = _teacher
+	var teacher = teacher
 		set(value)
 		{
 			field = value
@@ -58,25 +58,12 @@ class ScheduleHour(
 		error = when
 		{
 			start >= end -> Error.NEGATIVE_TIMESPAN
-			checkOverlapping() -> Error.OVERLAP
+			daySchedule.checkIfHourIsOverlappingWithOther(this) -> Error.OVERLAP
 			subject.isNullOrBlank() -> Error.SUBJECT_BLANK
 			teacher?.let { it !in teachers } ?: true -> Error.TEACHER_BLANK
 			else -> null
 		}
 	}
-
-	private fun checkOverlapping(): Boolean
-	{
-		var overlaps = false
-		for(i in 0 until daySchedule.size)
-		{
-			val comparedHour = daySchedule[i]
-			if(comparedHour != this && overlapsWith(comparedHour)) overlaps = true
-		}
-		return overlaps
-	}
-
-	private fun overlapsWith(other: ScheduleHour) = start in other.start..other.end
 
 	override fun equals(other: Any?): Boolean
 	{

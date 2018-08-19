@@ -9,7 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import pl.karol202.latemeter.R
 import pl.karol202.latemeter.utils.findView
 
-class TeacherStatsAdapter(private val context: Context, private val teacher: Teacher) : RecyclerView.Adapter<TeacherStatsAdapter.ViewHolder>()
+class TeacherStatsAdapter(
+		private val context: Context,
+		private val teacher: Teacher
+) : RecyclerView.Adapter<TeacherStatsAdapter.ViewHolder>()
 {
 	inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
 	{

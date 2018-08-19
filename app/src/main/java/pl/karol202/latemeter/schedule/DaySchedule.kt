@@ -46,6 +46,18 @@ class DaySchedule(
 		return size - 1
 	}
 
+	fun getCurrentScheduleHour(time: Time): ScheduleHour?
+	{
+		for(scheduleHour in scheduleHours)
+		{
+			if(scheduleHour.error != null) continue
+			if(time in scheduleHour.start..scheduleHour.end) return scheduleHour
+		}
+		return null
+	}
+
+	fun findSameScheduleHour(scheduleHour: ScheduleHour) = scheduleHours.find { it == scheduleHour }
+
 	fun removeScheduleHour(scheduleHour: ScheduleHour)
 	{
 		scheduleHours.remove(scheduleHour)
@@ -91,17 +103,15 @@ class DaySchedule(
 		scheduleHours.forEach { it.checkError() }
 	}
 
-	fun getCurrentScheduleHour(time: Time): ScheduleHour?
+	fun checkIfHourIsOverlappingWithOther(scheduleHour: ScheduleHour): Boolean
 	{
-		for(scheduleHour in scheduleHours)
-		{
-			if(scheduleHour.error != null) continue
-			if(time in scheduleHour.start..scheduleHour.end) return scheduleHour
+		scheduleHours.forEach { other ->
+			if(scheduleHour != other && overlaps(scheduleHour, other)) return true
 		}
-		return null
+		return false
 	}
 
-	fun findSameScheduleHour(scheduleHour: ScheduleHour) = scheduleHours.find { it == scheduleHour }
+	private fun overlaps(scheduleHour: ScheduleHour, other: ScheduleHour) = scheduleHour.start in other.start..other.end
 
 	private fun loadSchedule(context: Context, teachers: Teachers)
 	{

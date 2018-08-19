@@ -2,7 +2,6 @@ package pl.karol202.latemeter.utils
 
 import android.content.Context
 import android.graphics.Canvas
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import pl.karol202.latemeter.R
 
@@ -10,11 +9,11 @@ class ItemDivider(
 		context: Context
 ) : RecyclerView.ItemDecoration()
 {
-	private val divider = ContextCompat.getDrawable(context, R.drawable.item_divider)
+	private val divider = context.drawable(R.drawable.item_divider)
 
 	override fun onDrawOver(canvas: Canvas, parent: RecyclerView, state: RecyclerView.State)
 	{
-		if(divider == null) return
+		divider ?: return
 		val left = parent.paddingLeft
 		val right = parent.width - parent.paddingRight
 

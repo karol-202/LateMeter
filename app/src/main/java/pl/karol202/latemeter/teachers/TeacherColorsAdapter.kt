@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.annotation.ColorInt
 import androidx.recyclerview.widget.RecyclerView
 import pl.karol202.latemeter.R
 import pl.karol202.latemeter.utils.findView
@@ -19,7 +20,7 @@ class TeacherColorsAdapter(
 	{
 		private val imageColor = view.findView<ImageView>(R.id.image_teacher_color)
 
-		private var color: Int? = null
+		@ColorInt private var color: Int? = null
 
 		init
 		{
@@ -31,7 +32,7 @@ class TeacherColorsAdapter(
 			listener(color ?: return)
 		}
 
-		fun bind(color: Int)
+		fun bind(@ColorInt color: Int)
 		{
 			this.color = color
 			imageColor.setColorFilter(color)
@@ -45,7 +46,6 @@ class TeacherColorsAdapter(
 		val typedArray = context.resources.obtainTypedArray(R.array.teacher_colors)
 		colors = List(typedArray.length()) { typedArray.getColor(it, Color.BLACK) }
 		typedArray.recycle()
-		println(colors.size)
 	}
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder

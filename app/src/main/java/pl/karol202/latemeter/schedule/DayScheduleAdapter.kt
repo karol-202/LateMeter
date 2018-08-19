@@ -55,12 +55,13 @@ class DayScheduleAdapter(
 		private var ordinal: Int? = null
 		private var scheduleHour: ScheduleHour? = null
 		private var binding = false
+		private var boundTeacherSelection: Int? = null
 
 		init
 		{
-			textStartHour.setOnClickListener { scheduleHour?.let { listener.onStartHourChange(it) } }
-			textEndHour.setOnClickListener { scheduleHour?.let { listener.onEndHourChange(it) } }
-			imageRemove.setOnClickListener { scheduleHour?.let { listener.onRemove(it) } }
+			textStartHour.setOnClickListener { scheduleHour?.let(listener::onStartHourChange) }
+			textEndHour.setOnClickListener { scheduleHour?.let(listener::onEndHourChange) }
+			imageRemove.setOnClickListener { scheduleHour?.let(listener::onRemove) }
 			editTextSubject.addTextChangedListener(object : TextWatcher
 			{
 				override fun afterTextChanged(s: Editable?)
@@ -80,6 +81,11 @@ class DayScheduleAdapter(
 			{
 				override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long)
 				{
+					boundTeacherSelection.let {
+						boundTeacherSelection = null
+						if(it == position) return
+					}
+
 					scheduleHour?.let { hour ->
 						val teacher = teachersAdapter.getIdOfTeacherAtPosition(position)
 						val update = teacher?.let { listener.onTeacherChange(hour, it) } ?: run {
@@ -108,6 +114,7 @@ class DayScheduleAdapter(
 
 			spinnerTeacher.adapter = teachersAdapter
 			spinnerTeacher.setSelection(teachersAdapter.getIndexOfTeacherOfId(scheduleHour.teacher))
+			boundTeacherSelection = spinnerTeacher.selectedItemPosition
 
 			updateError(scheduleHour)
 

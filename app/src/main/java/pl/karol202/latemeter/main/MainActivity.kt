@@ -14,7 +14,7 @@ import pl.karol202.latemeter.R
 import pl.karol202.latemeter.schedule.Schedule
 import pl.karol202.latemeter.settings.SettingsActivity
 import pl.karol202.latemeter.teachers.Teachers
-import pl.karol202.latemeter.utils.findView
+import pl.karol202.latemeter.utils.view
 
 class MainActivity : AppCompatActivity()
 {
@@ -26,12 +26,12 @@ class MainActivity : AppCompatActivity()
 	val teachers by lazy { Teachers.loadTeachers(this) }
 	val schedule by lazy { Schedule.loadSchedule(this, teachers) }
 
-	private val toolbar by lazy { findView<Toolbar>(R.id.toolbar) }
-	val tabLayout by lazy { findView<TabLayout>(R.id.tabLayout_main) }
-	private val drawerLayout by lazy { findView<DrawerLayout>(R.id.drawerLayout_main) }
-	private val navigationView by lazy { findView<NavigationView>(R.id.navigation_view_main) }
+	private val toolbar by view<Toolbar>(R.id.toolbar)
+	val tabLayout by view<TabLayout>(R.id.tabLayout_main)
+	private val drawerLayout by view<DrawerLayout>(R.id.drawerLayout_main)
+	private val navigationView by view<NavigationView>(R.id.navigation_view_main)
 
-	private var screen: Screens? = null
+	private var screen: ScreenType? = null
 		set(value)
 		{
 			if(value == null) throw Exception("Cannot set null screen")
@@ -56,14 +56,14 @@ class MainActivity : AppCompatActivity()
 
 	private fun restoreState(state: Bundle?)
 	{
-		if(state == null) return
-		screen = (state[KEY_SCREEN] as? Screens) ?: return
+		state ?: return
+		screen = (state[KEY_SCREEN] as? ScreenType) ?: return
 	}
 
 	override fun onResume()
 	{
 		super.onResume()
-		if(screen == null) screen = Screens.LATENESS
+		screen = screen ?: ScreenType.LATENESS
 	}
 
 	override fun onSaveInstanceState(outState: Bundle?)
@@ -103,7 +103,7 @@ class MainActivity : AppCompatActivity()
 
 	private fun onScreenItemSelected(item: MenuItem): Boolean
 	{
-		screen = Screens.findScreenById(item.itemId) ?: return false
+		screen = ScreenType.findScreenById(item.itemId) ?: return false
 		return true
 	}
 

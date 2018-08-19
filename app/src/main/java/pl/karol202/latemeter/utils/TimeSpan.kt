@@ -12,10 +12,10 @@ class TimeSpan private constructor(
 {
 	companion object
 	{
-		val zero = createTimeSpan(0, 0, 0) ?: throw Exception()
+		val zero = createTimeSpan(0, 0, 0)!!
 
 		fun fromMinutes(minutes: Int) =
-				createTimeSpan(minutes / 60, minutes % 60, 0) ?: throw Exception()
+				createTimeSpan(minutes / 60, minutes % 60, 0)!!
 
 		fun fromSeconds(time: Int): TimeSpan
 		{
@@ -23,7 +23,7 @@ class TimeSpan private constructor(
 			val minutes = (time / 60) % 60
 			val hours = (time / 3600)
 
-			return createTimeSpan(hours, minutes, seconds) ?: throw Exception()
+			return createTimeSpan(hours, minutes, seconds)!!
 		}
 
 		private fun createTimeSpan(hour: Int, minute: Int, second: Int) =

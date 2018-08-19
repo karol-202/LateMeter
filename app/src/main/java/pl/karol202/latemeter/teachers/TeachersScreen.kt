@@ -9,7 +9,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import pl.karol202.latemeter.R
 import pl.karol202.latemeter.main.Screen
+import pl.karol202.latemeter.teachers.Teachers.Sorting.BY_NAME_ASCENDING
 import pl.karol202.latemeter.utils.findView
+import pl.karol202.latemeter.utils.getSerializable
+import pl.karol202.latemeter.utils.getString
+import pl.karol202.latemeter.utils.property
 
 class TeachersScreen : Screen()
 {
@@ -22,14 +26,9 @@ class TeachersScreen : Screen()
 	}
 
 	private val teachers by lazy { requireMainActivity().teachers }
-	private val adapter by lazy { TeachersAdapter(requireContext(), teachers, sorting) { i, t -> editTeacher(i, t) } }
+	private val adapter by lazy { TeachersAdapter(requireContext(), teachers, BY_NAME_ASCENDING) { i, t -> editTeacher(i, t) } }
 
-	private var sorting: Teachers.Sorting = Teachers.Sorting.BY_NAME_ASCENDING
-		set(value)
-		{
-			field = value
-			adapter.sorting = value
-		}
+	private var sorting by property { adapter::sorting }
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
 	{
@@ -49,7 +48,7 @@ class TeachersScreen : Screen()
 
 	private fun restoreState(state: Bundle?)
 	{
-		if(state == null) return
+		state ?: return
 		sorting = state.getSerializable(KEY_SORTING) as Teachers.Sorting
 	}
 
@@ -76,7 +75,7 @@ class TeachersScreen : Screen()
 
 	private fun showSortingDialog()
 	{
-		var sorting = adapter.sorting
+		var sorting = sorting
 		val builder = AlertDialog.Builder(requireContext())
 		builder.setTitle(R.string.dialog_sorting)
 		builder.setSingleChoiceItems(getSortingMethodsArray(), sorting.ordinal) { _, which ->
@@ -109,8 +108,8 @@ class TeachersScreen : Screen()
 
 	override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
 	{
-		val id = data?.getStringExtra(TeacherActivity.KEY_ID)
-		val teacher = data?.getSerializableExtra(TeacherActivity.KEY_TEACHER) as? Teacher ?: return //In case of null 'data' or no teacher (cancel)
+		val id = data.getString(TeacherActivity.KEY_ID)
+		val teacher = data.getSerializable<Teacher>(TeacherActivity.KEY_TEACHER) ?: return //In case of null 'data' or no teacher (cancel)
 		when
 		{
 			requestCode == REQUEST_ADD_TEACHER && resultCode == TeacherActivity.RESULT_OK -> teachers.addTeacher(teacher)

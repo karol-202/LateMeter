@@ -13,7 +13,6 @@ import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -21,7 +20,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import pl.karol202.latemeter.R
-import pl.karol202.latemeter.utils.findView
+import pl.karol202.latemeter.schedule.ScheduleHour
+import pl.karol202.latemeter.utils.*
 
 class TeacherActivity : AppCompatActivity()
 {
@@ -29,28 +29,27 @@ class TeacherActivity : AppCompatActivity()
 	{
 		const val KEY_ID = "id"
 		const val KEY_TEACHER = "teacher"
-		const val KEY_SCHEDULE_HOUR = "schedule_hour"//When teacher is created by selecting "Create new teacher" item from schedule hour's teacher menu
+		const val KEY_SCHEDULE_HOUR = "schedule_hour" //When teacher is created by selecting "Create new teacher" item from schedule hour's teacher menu
 
 		const val RESULT_CANCEL = 0
 		const val RESULT_OK = 1
 		const val RESULT_REMOVE = 2
 	}
 
-	private val adapter by lazy { TeacherStatsAdapter(this, teacher) }
+	private val statsAdapter by lazy { TeacherStatsAdapter(this, teacher) }
 
-	private val toolbar by lazy { findView<Toolbar>(R.id.toolbar) }
-	private val editTextLayoutName by lazy { findView<TextInputLayout>(R.id.editTextLayout_teacher_name) }
-	private val editTextName by lazy { findView<TextInputEditText>(R.id.editText_teacher_name) }
-	private val panelTeacherColor by lazy { findView<View>(R.id.panel_teacher_color) }
-	private val imageTeacherColor by lazy { findView<ImageView>(R.id.image_teacher_color) }
-	private val recyclerStats by lazy { findView<RecyclerView>(R.id.recycler_teacher_stats) }
-	private val buttonDone by lazy { findView<FloatingActionButton>(R.id.button_teacher_done) }
+	private val toolbar by view<Toolbar>(R.id.toolbar)
+	private val editTextLayoutName by view<TextInputLayout>(R.id.editTextLayout_teacher_name)
+	private val editTextName by view<TextInputEditText>(R.id.editText_teacher_name)
+	private val panelTeacherColor by view<View>(R.id.panel_teacher_color)
+	private val imageTeacherColor by view<ImageView>(R.id.image_teacher_color)
+	private val recyclerStats by view<RecyclerView>(R.id.recycler_teacher_stats)
+	private val buttonDone by view<FloatingActionButton>(R.id.button_teacher_done)
 
-	private val id: String? by lazy { intent.getStringExtra(KEY_ID) ?: null }
-	private val teacher: Teacher by lazy {
-		(intent.getSerializableExtra(KEY_TEACHER) as? Teacher) ?: Teacher(getString(R.string.default_teacher_name), ResourcesCompat.getColor(resources, R.color.teacher_default_color, null))
-	}
-	private val scheduleHour by lazy { intent.getSerializableExtra(KEY_SCHEDULE_HOUR) ?: null }
+	private val id by lazy { intent.getString(KEY_ID) }
+	private val teacher by lazy { intent.getSerializable(KEY_TEACHER) ?:
+		Teacher(string(R.string.default_teacher_name), color(R.color.teacher_default_color)) }
+	private val scheduleHour by lazy { intent.getSerializable<ScheduleHour>(KEY_SCHEDULE_HOUR) }
 
 	private var newColor: Int? = null
 
@@ -80,7 +79,7 @@ class TeacherActivity : AppCompatActivity()
 		imageTeacherColor.setColorFilter(teacher.color)
 
 		recyclerStats.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-		recyclerStats.adapter = adapter
+		recyclerStats.adapter = statsAdapter
 
 		buttonDone.setOnClickListener { applyTeacher() }
 

@@ -12,7 +12,7 @@ class Time private constructor(
 {
 	companion object
 	{
-		val zero = createTime(0, 0, 0) ?: throw Exception()
+		val zero = createTime(0, 0, 0)!!
 
 		fun fromSeconds(time: Int): Time?
 		{

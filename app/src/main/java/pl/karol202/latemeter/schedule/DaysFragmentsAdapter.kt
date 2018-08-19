@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import androidx.viewpager.widget.PagerAdapter
+import pl.karol202.latemeter.utils.string
 
 class DaysFragmentsAdapter(
 		private val context: Context,
@@ -58,7 +59,7 @@ class DaysFragmentsAdapter(
 
 	override fun isViewFromObject(view: View, obj: Any) = (obj as DayScheduleFragment).view == view
 
-	override fun getPageTitle(position: Int): CharSequence = context.getString(DayOfWeek.values()[position].dayName)
+	override fun getPageTitle(position: Int): CharSequence = context.string(DayOfWeek.values()[position].dayName)
 
 	fun getFragment(dayOfWeek: DayOfWeek) = fragments[dayOfWeek]
 }

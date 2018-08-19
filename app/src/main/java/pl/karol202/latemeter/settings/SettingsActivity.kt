@@ -4,11 +4,11 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import pl.karol202.latemeter.R
-import pl.karol202.latemeter.utils.findView
+import pl.karol202.latemeter.utils.view
 
 class SettingsActivity : AppCompatActivity()
 {
-	private val toolbar by lazy { findView<Toolbar>(R.id.toolbar) }
+	private val toolbar by view<Toolbar>(R.id.toolbar)
 
 	override fun onCreate(savedInstanceState: Bundle?)
 	{
